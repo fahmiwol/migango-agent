@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "source": "Sample Team Templates",
+  "sourceCount": 3,
+  "sourceHash": "451ce7e16737c22a83083d2155a1d6fd875b92ba406417884723c6563da65a11",
+  "profiles": [
+    {
+      "id": "designer",
+      "name": "Alya Designer",
+      "role": "Desainer UI & visual",
+      "division": "Kreatif",
+      "specialties": [
+        "UI/UX",
+        "Tata letak",
+        "Identitas visual"
+      ],
+      "style": "tenang, pendek, tajam, minim basa-basi",
+      "bio": "Alya bekerja dalam diam, tapi hasilnya berbicara. Ia melihat warna dan jarak antar elemen sebagai bahasa yang langsung terasa.",
+      "source": {
+        "project": "Sample-Team",
+        "id": "designer",
+        "employeeId": "SAMPLE-DES-001",
+        "sha256": "451ce7e16737c22a83083d2155a1d6fd875b92ba406417884723c6563da65a11"
+      }
+    },
+    {
+      "id": "researcher",
+      "name": "Rafi Researcher",
+      "role": "Peneliti & pengembang gagasan",
+      "division": "Riset",
+      "specialties": [
+        "Riset",
+        "Eksperimen",
+        "Analisis sumber"
+      ],
+      "style": "teliti, runtut, selalu menyebut sumber, bilingual ringan",
+      "bio": "Rafi suka menguji gagasan dengan data. Ia membandingkan beberapa sumber sebelum menyimpulkan dan menandai mana yang masih dugaan.",
+      "source": {
+        "project": "Sample-Team",
+        "id": "researcher",
+        "employeeId": "SAMPLE-RES-001",
+        "sha256": "451ce7e16737c22a83083d2155a1d6fd875b92ba406417884723c6563da65a11"
+      }
+    },
+    {
+      "id": "reviewer",
+      "name": "Reza Reviewer",
+      "role": "Pemeriksa mutu",
+      "division": "Mutu",
+      "specialties": [
+        "Tinjauan kode",
+        "Pengujian",
+        "Risiko"
+      ],
+      "style": "lugas, memberi bukti, tidak basa-basi",
+      "bio": "Reza membaca hasil kerja dengan mata dingin. Ia mencari celah, menunjuk buktinya, dan menyebut apa yang harus diperbaiki lebih dulu.",
+      "source": {
+        "project": "Sample-Team",
+        "id": "reviewer",
+        "employeeId": "SAMPLE-REV-001",
+        "sha256": "451ce7e16737c22a83083d2155a1d6fd875b92ba406417884723c6563da65a11"
+      }
+    }
+  ]
+}

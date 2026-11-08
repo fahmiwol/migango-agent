@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-21T16:15:20.005Z",
+  "platform": "win32",
+  "node": "v22.14.0",
+  "scope": "Windows MCP stdio lifetime custody, not candidate OS/network sandbox",
+  "red": [
+    {
+      "test": "concurrent connect coalesces",
+      "observed": "started\\nstarted\\n instead of started\\n",
+      "status": "reproduced before implementation"
+    },
+    {
+      "test": "durable lifetime on restart",
+      "observed": "0 HOLD rows instead of1 after idle host crash",
+      "status": "reproduced before implementation"
+    }
+  ],
+  "qualification": "In the pre-change single-session fixture this host already removed the fixture server/grandchild after host kill; a pre-change orphan was not reproduced. The missing lifetime intent/binding and concurrent duplicate start were reproduced.",
+  "green": {
+    "command": "node --test tests/unit/mcp.test.mjs tests/unit/mcp-custody.test.mjs",
+    "tests": 6,
+    "pass": 6,
+    "fail": 0,
+    "skipped": 0,
+    "proof": [
+      "real SDK initialize+list+allowlisted Unicode call",
+      "concurrent list creates one server lifetime/effect marker",
+      "forced host kill after list while idle removes server and grandchild",
+      "reopen SQLite -> one HOLD/windows-job/absent, marker unchanged, assertSafe blocked",
+      "known Stop/close awaited and completed; connector reset reconnects",
+      "Stop during connecting creates no later target/running session",
+      "stderr65536B and protocol2MiB bounds stop supervisor and HOLD"
+    ]
+  },
+  "integration": "new MCP(store,{recovery}) where recovery is existing RecoveryJournal. Parent must wire main constructor before claiming durable app-wide MCP coverage.",
+  "limits": [
+    "Windows only; unsupported platform fails before target spawn",
+    "MCP workers remain trusted owner-approved processes, not candidate AppContainer sandbox",
+    "Remote/service effects are not rolled back; HOLD requires owner inspection",
+    "16MiB cumulative stdout/session and64KiB cumulative stderr/session; no silent reconnect",
+    "No tokens read or retained, journal stores digest and supervisor identity only"
+  ],
+  "files": [
+    {
+      "file": "src/tools/mcp.mjs",
+      "sha256": "afa55bc0325d2c9f09144f03d98c4d8db0fe034e1542e7c1e3d6cffb726cf6fd"
+    },
+    {
+      "file": "src/recovery/mcp-transport.mjs",
+      "sha256": "c035b99f6d11ec65a8d07d0459d818d404eb63f749d2284909fc09ce2d4bf8b3"
+    },
+    {
+      "file": "src/recovery/mcp-job.ps1",
+      "sha256": "e67a9cbd7172136e0116e5ad99aa522cbf27059b255838939c85c17cae3b1bdb"
+    },
+    {
+      "file": "tests/unit/mcp.test.mjs",
+      "sha256": "ec0f1746a92a4250cbb89dc68395198794fd04acf5334ae5df3366b55f9afe44"
+    },
+    {
+      "file": "tests/unit/mcp-custody.test.mjs",
+      "sha256": "32de74003cc078c931d94b0661fc71cf0b1ecb9dd9342556df067e10ac20beaf"
+    },
+    {
+      "file": "tests/fixtures/mcp-custody-server.mjs",
+      "sha256": "73591a5105a7567f4ab914bb9333128f31d2e0d4a8253a8f4fb4c8e3f4c49944"
+    },
+    {
+      "file": "tests/fixtures/mcp-custody-host.mjs",
+      "sha256": "100b1c16171d963bdf68eb04832db80eb6212ce7e7724539929c2c967da201b5"
+    }
+  ]
+}

@@ -1,0 +1,1220 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; frame-src 'none'"
+    />
+    <title>miganGO</title>
+    <link rel="icon" type="image/png" href="assets/migango.png" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="galaxy.css" />
+    <link rel="stylesheet" href="workspace.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">
+        <img class="brand-logo" src="assets/migancore-logo.svg" alt="miganGO" />
+        <div>
+          migan<span class="go-word">GO</span
+          ><span class="subbrand">AGENT FRAMEWORK · DESKTOP</span>
+          <small id="appVersion" aria-label="Versi aplikasi"></small>
+        </div>
+      </div>
+      <button id="newTask" class="new">
+        ＋ <span data-i18n="new">Pekerjaan baru</span><kbd>Ctrl N</kbd>
+      </button>
+      <nav class="galaxy-nav" aria-label="Navigasi utama">
+        <button data-nav="home" aria-label="Beranda" aria-current="page">
+          <svg class="icon" aria-hidden="true">
+            <use href="assets/icons.svg#home" /></svg
+          ><span data-i18n="navHome">Beranda</span>
+        </button>
+        <button data-nav="activity" aria-label="Jejak kerja">
+          <svg class="icon" aria-hidden="true">
+            <use href="assets/icons.svg#tasks" /></svg
+          ><span data-i18n="navTasks">Jejak kerja</span>
+        </button>
+        <button data-nav="files" aria-label="Berkas">
+          <svg class="icon" aria-hidden="true">
+            <use href="assets/icons.svg#folder" /></svg
+          ><span data-i18n="files">Berkas</span>
+        </button>
+        <button data-nav="browser" aria-label="Browser">
+          <svg class="icon" aria-hidden="true">
+            <use href="assets/icons.svg#globe" /></svg
+          ><span data-i18n="browser">Browser</span>
+        </button>
+        <button data-nav="computer" aria-label="Komputer & terminal">
+          <svg class="icon" aria-hidden="true">
+            <use href="assets/icons.svg#terminal" /></svg
+          ><span data-i18n="navComputer">Komputer & terminal</span>
+        </button>
+        <button data-nav="memory" aria-label="Memori">
+          <svg class="icon" aria-hidden="true">
+            <use href="assets/icons.svg#memory" /></svg
+          ><span data-i18n="navMemory">Memori</span>
+        </button>
+        <button data-nav="skills" aria-label="Skill & MCP">
+          <svg class="icon" aria-hidden="true">
+            <use href="assets/icons.svg#network" /></svg
+          ><span data-i18n="navSkills">Skill & MCP</span>
+        </button>
+        <button data-nav="research" aria-label="Riset">
+          <svg class="icon" aria-hidden="true">
+            <use href="assets/icons.svg#search" /></svg
+          ><span data-i18n="navResearch">Riset</span>
+        </button>
+        <button data-nav="recovery" aria-label="Pemulihan">
+          <svg class="icon" aria-hidden="true">
+            <use href="assets/icons.svg#shield" /></svg
+          ><span data-i18n="navRecovery">Pemulihan</span>
+        </button>
+      </nav>
+      <div class="side-label" data-i18n="workspace">RUANG KERJA</div>
+      <button id="pickFolder" class="folder">
+        ▱ <span data-i18n="folder">Pilih folder proyek</span>
+      </button>
+      <button id="newProject" class="folder">
+        ＋ <span data-i18n="newProject">Proyek baru</span>
+      </button>
+      <p id="workspacePath" class="path"></p>
+      <div class="guide-card">
+        <img src="assets/migancore-logo.svg" width="55" height="35" alt="" />
+        <strong data-i18n="guideTitle">Ide besar, langkah kecil.</strong>
+        <p data-i18n="guideBody">
+          Ceritakan tujuanmu. Tinjau tindakan, lalu periksa hasilnya.
+        </p>
+        <button id="guideExample" data-i18n="guideAction">
+          Bantu saya mulai ↗
+        </button>
+      </div>
+      <div class="sidebar-bottom">
+        <div class="memory">
+          <span class="status-dot"></span>
+          <div>
+            <strong data-i18n="local">Milik Anda. Di laptop Anda.</strong
+            ><small data-i18n="memory"
+              >Memori eksternal lewat MCP · tanpa model saat boot</small
+            >
+          </div>
+        </div>
+        <button id="whatsNewBtn" class="muted">Apa yang baru</button>
+        <button id="settingsBtn">
+          ⚙ <span data-i18n="settings">Koneksi & pengaturan</span></button
+        ><button id="langBtn" class="muted">English / Indonesia</button>
+      </div>
+    </aside>
+    <dialog id="whatsNewDialog" aria-labelledby="whatsNewTitle">
+      <div class="dialog-title">
+        <div>
+          <span class="eyebrow">RIWAYAT VERSI</span>
+          <h2 id="whatsNewTitle">Apa yang baru</h2>
+        </div>
+        <button type="button" id="closeWhatsNew" aria-label="Tutup">×</button>
+      </div>
+      <p class="hint">Perubahan pada versi terbaru miganGO.</p>
+      <div id="whatsNewContent" aria-live="polite"></div>
+    </dialog>
+    <main>
+      <header>
+        <div>
+          <span class="eyebrow" data-i18n="eyebrow">RUANG KERJA PRIBADI</span>
+          <h1 data-i18n="title">Apa yang ingin kamu kerjakan?</h1>
+          <p class="header-caption" data-i18n="headerCaption">
+            Dari ide, menjadi hasil yang bisa diperiksa.
+          </p>
+        </div>
+        <div class="header-actions">
+          <span id="routeBadge" class="badge">Model berikutnya: belum dipilih</span>
+          <button
+            id="inspectorToggle"
+            aria-expanded="true"
+            aria-controls="inspector"
+            data-i18n="toolsPanel"
+          >
+            Panel kerja
+          </button>
+        </div>
+      </header>
+      <nav
+        id="workspaceTabs"
+        class="workspace-tabbar"
+        role="tablist"
+        aria-label="Ruang kerja"
+      >
+        <button
+          id="workspace-tab-chat"
+          type="button"
+          role="tab"
+          aria-controls="chatWorkspace"
+          aria-selected="true"
+          data-workspace-tab="chat"
+        >
+          <svg class="icon" aria-hidden="true">
+            <use href="assets/icons.svg#home" /></svg
+          ><span data-i18n="workspaceChat">Percakapan</span>
+        </button>
+        <button
+          id="agentsBtn"
+          type="button"
+          role="tab"
+          aria-controls="teamWorkspace"
+          aria-selected="false"
+          tabindex="-1"
+          data-workspace-tab="team"
+        >
+          <svg class="icon" aria-hidden="true">
+            <use href="assets/icons.svg#network" /></svg
+          ><span data-i18n="workspaceTeam">Tim AI</span>
+        </button>
+        <button
+          id="artifactsBtn"
+          type="button"
+          role="tab"
+          aria-controls="resultsWorkspace"
+          aria-selected="false"
+          tabindex="-1"
+          data-workspace-tab="results"
+        >
+          <svg class="icon" aria-hidden="true">
+            <use href="assets/icons.svg#folder" /></svg
+          ><span data-i18n="workspaceResults">Hasil</span>
+        </button>
+        <span class="workspace-tab-note" data-i18n="workspaceTabHint"
+          >Satu pekerjaan, semua kebutuhan.</span
+        >
+      </nav>
+      <div class="workspace">
+        <section class="conversation">
+          <div class="composer">
+            <div class="mode-row">
+              <select id="taskModel" aria-label="Model untuk pekerjaan">
+                <option value="">Ikuti koneksi aktif</option>
+                <option value="auto">Otomatis · sesuai bobot tugas</option>
+              </select>
+              <div
+                class="modes"
+                role="group"
+                aria-label="Mode pekerjaan"
+                aria-describedby="modeHint"
+              >
+                <button class="active" data-mode="ask" data-i18n="ask">
+                  Tanya</button
+                ><button data-mode="work" data-i18n="work">Kerjakan</button
+                ><button data-mode="build" data-i18n="buildMode">
+                  Bangun aplikasi
+                </button>
+              </div>
+              <span id="modeBusyNote" class="mode-busy-note" role="status" hidden
+                >Sedang menjalankan pekerjaan</span
+              >
+              <select id="skill" aria-label="Skill terpilih">
+                <option value="">Tanpa skill tambahan</option>
+              </select>
+            </div>
+            <p id="modeHint" class="mode-hint"></p>
+            <textarea
+              id="prompt"
+              rows="3"
+              placeholder="Misalnya: buat aplikasi pencatatan sederhana untuk toko saya…"
+              aria-label="Instruksi pekerjaan"
+            ></textarea>
+            <div class="composer-bottom">
+              <span id="budget" data-i18n="budget"
+                >Baca otomatis · ubah dengan persetujuan</span
+              ><button
+                id="taskTeamQuick"
+                class="task-team-quick"
+                type="button"
+                aria-controls="taskTeamSettings"
+                title="Lihat dan ubah tim untuk tugas ini"
+              >
+                Tim: Migan saja</button
+              ><button id="stop" class="danger" hidden data-i18n="stop">
+                ■ Berhenti</button
+              ><button id="send" class="primary">
+                <span data-i18n="send">Mulai</span> ↑
+              </button>
+            </div>
+          </div>
+          <div
+            id="chatWorkspace"
+            role="tabpanel"
+            aria-labelledby="workspace-tab-chat"
+          >
+            <div id="holdBanner" class="hold-card" role="status" hidden>
+              <svg id="holdBannerIcon" class="icon hold-card-icon" aria-hidden="true">
+                <use href="assets/icons.svg#shield" />
+              </svg>
+              <div class="hold-card-body">
+                <strong class="hold-card-title">Pekerjaan sedang ditahan</strong>
+                <p id="holdBannerText"></p>
+              </div>
+              <button id="holdBannerAction" class="primary" type="button"></button>
+            </div>
+            <section
+              id="sedangDikerjakan"
+              class="sedang-dikerjakan"
+              aria-label="Sedang dikerjakan"
+              aria-live="polite"
+              hidden
+            ></section>
+            <div
+              class="workflow-rail"
+              role="group"
+              aria-label="Tahap pekerjaan"
+            >
+              <div data-stage="plan" data-state="active">
+                <b>1</b
+                ><span
+                  ><strong data-i18n="stagePlan">Rencana</strong
+                  ><small data-i18n="stagePlanHint"
+                    >Tentukan tujuan</small
+                  ></span
+                >
+              </div>
+              <div data-stage="work" data-state="pending">
+                <b>2</b
+                ><span
+                  ><strong data-i18n="stageWork">Kerjakan</strong
+                  ><small data-i18n="stageWorkHint">Model dan alat</small></span
+                >
+              </div>
+              <div data-stage="test" data-state="pending">
+                <b>3</b
+                ><span
+                  ><strong data-i18n="stageTest">Uji</strong
+                  ><small id="testStageHint" data-i18n="stageTestHint"
+                    >Belum divalidasi</small
+                  ></span
+                >
+              </div>
+              <div data-stage="review" data-state="pending">
+                <b>4</b
+                ><span
+                  ><strong data-i18n="stageReview">Tinjau</strong
+                  ><small data-i18n="stageReviewHint"
+                    >Periksa hasil</small
+                  ></span
+                >
+              </div>
+            </div>
+            <div class="task-board">
+              <section class="history-panel" aria-label="Daftar pekerjaan">
+                <div class="history-heading">
+                  <strong data-i18n="taskList">Daftar pekerjaan</strong
+                  ><span id="taskCount">0</span>
+                </div>
+                <label class="history-filter">
+                  <span class="sr-only">Tampilkan</span>
+                  <select id="historyFilter" aria-label="Filter daftar pekerjaan">
+                    <option value="mine">Pekerjaan saya</option>
+                    <option value="all">Semua</option>
+                  </select>
+                </label>
+                <nav id="history" aria-label="Riwayat pekerjaan"></nav>
+              </section>
+              <section class="task-thread" aria-label="Percakapan pekerjaan">
+                <div id="conversationScroll">
+                  <div id="welcome">
+                    <span class="hello" data-i18n="hello"
+                      >SATU IDE, BANYAK KEMUNGKINAN</span
+                    >
+                    <h2 data-i18n="intro">Mulai dari tujuanmu.</h2>
+                    <p data-i18n="introBody">
+                      Pilih folder, sambungkan model, lalu mulai. Anda melihat
+                      rencana, meninjau tindakan, dan memeriksa hasilnya.
+                    </p>
+                    <div class="onboarding">
+                      <button id="connectFirst">
+                        <b>01</b
+                        ><span data-i18n="connect">Sambungkan model</span
+                        ><span>↗</span></button
+                      ><button id="folderFirst">
+                        <b>02</b
+                        ><span data-i18n="choose">Pilih folder kerja</span
+                        ><span>↗</span></button
+                      ><button id="exampleFirst">
+                        <b>03</b
+                        ><span data-i18n="first">Coba pekerjaan pertama</span
+                        ><span>↗</span>
+                      </button>
+                    </div>
+                    <div class="suggestions">
+                      <button
+                        data-prompt="Jelaskan struktur proyek ini dan cara menjalankannya. Baca dokumen utama, jangan mengubah berkas."
+                      >
+                        <span>⌘</span
+                        ><strong data-i18n="understand">Pahami proyek</strong
+                        ><small data-i18n="understandDesc"
+                          >Peta berkas dan cara kerja</small
+                        ></button
+                      ><button
+                        data-prompt="Buat landing page sederhana di folder ini. Mulai dari rencana dan kriteria uji, lalu usulkan berkas untuk saya tinjau."
+                      >
+                        <span>◇</span
+                        ><strong data-i18n="build">Bangun aplikasi</strong
+                        ><small data-i18n="buildDesc"
+                          >Dari ide ke versi pertama</small
+                        ></button
+                      ><button
+                        data-prompt="Bantu saya menyusun dokumen Markdown rencana kerja. Tanyakan konteks yang belum jelas, lalu buat berkas hasil yang bisa ditinjau."
+                      >
+                        <span>▤</span
+                        ><strong data-i18n="document">Buat dokumen</strong
+                        ><small data-i18n="documentDesc"
+                          >Hasil yang bisa digunakan</small
+                        >
+                      </button>
+                    </div>
+                  </div>
+                  <div id="messages" aria-live="polite"></div>
+                </div>
+                <div id="runStatus" role="status"></div>
+                <div
+                  id="usageLine"
+                  class="usage-line"
+                  aria-live="polite"
+                  hidden
+                ></div>
+              </section>
+            </div>
+            <div class="footnote" data-i18n="footnote">
+              Periksa hasil sebelum dipakai.
+            </div>
+          </div>
+          <section
+            id="teamWorkspace"
+            class="workspace-center-panel"
+            role="tabpanel"
+            aria-labelledby="agentsBtn"
+            hidden
+          >
+            <dialog id="agentsDialog" aria-labelledby="agentsTitle">
+              <div class="agents-top">
+                <div>
+                  <span class="eyebrow" data-i18n="agentsEyebrow"
+                    >TIM AGEN</span
+                  >
+                  <h2 id="agentsTitle" data-i18n="agentsTitle">
+                    Kenali tim yang membantumu
+                  </h2>
+                  <p class="hint" data-i18n="agentsHint">
+                    Migan adalah agen utama. Agen lain hanya dipanggil bila
+                    perlu.
+                  </p>
+                </div>
+                <button id="closeAgents" data-i18n="backToChat">
+                  Kembali ke percakapan
+                </button>
+              </div>
+              <p id="agentsWarning" class="warning" hidden></p>
+
+              <div class="team-overview">
+                <span id="teamStats"></span
+                ><span class="team-primary-note" data-i18n="miganPrimary"
+                  >Migan · pendamping utama lintas bidang</span
+                ><button id="openRecruit" type="button" data-i18n="addEmployee">
+                  ＋ Tambah karyawan AI
+                </button>
+              </div>
+              <ul id="agentsList" class="agents-list"></ul>
+              <section
+                id="employeeDetail"
+                class="employee-detail"
+                aria-live="polite"
+              ></section>
+              <details id="teamRecruit" class="team-recruit">
+                <summary data-i18n="employeeRecruit">
+                  Profil dan pengaturan anggota baru
+                </summary>
+                <label class="template-picker"
+                  ><span data-i18n="employeeTemplateLabel"
+                    >Mulai dari profil contoh atau buat anggota sendiri</span
+                  ><select id="employeeTemplate">
+                    <option value="">Anggota sendiri</option>
+                  </select></label
+                >
+                <p id="templateDescription" class="template-description"></p>
+                <form id="addTeamMember" class="team-form">
+                  <label
+                    ><span data-i18n="teamMemberName">Nama agen</span
+                    ><input
+                      id="teamMemberName"
+                      maxlength="40"
+                      required
+                      placeholder="Koda"
+                  /></label>
+                  <label
+                    ><span data-i18n="teamMemberModel">Model</span
+                    ><select id="teamMemberModel" required></select
+                  ></label>
+                  <label
+                    ><span data-i18n="teamMemberAccess">Akses</span
+                    ><select id="teamMemberAccess">
+                      <option value="read" data-i18n="teamRead">
+                        Baca saja
+                      </option>
+                      <option value="edit" data-i18n="teamEdit">
+                        Baca dan usulkan perubahan
+                      </option>
+                      <option value="none" selected data-i18n="teamNone">
+                        Percakapan tanpa alat
+                      </option>
+                    </select></label
+                  >
+                  <button id="saveTeamMember" type="submit" data-i18n="teamAdd">
+                    Tambah agen
+                  </button>
+                </form>
+
+                <p id="teamConfigMessage" class="hint" role="status"></p>
+              </details>
+            </dialog>
+          </section>
+          <section
+            id="resultsWorkspace"
+            class="workspace-center-panel"
+            role="tabpanel"
+            aria-labelledby="artifactsBtn"
+            hidden
+          >
+            <div class="results-heading">
+              <div>
+                <span class="eyebrow" data-i18n="resultsEyebrow"
+                  >HASIL PEKERJAAN</span
+                >
+                <h2 data-i18n="resultsTitle">
+                  Dari percakapan, menjadi hasil.
+                </h2>
+                <p data-i18n="resultsHint">
+                  Buka berkas dan periksa hasil yang sudah dicatat.
+                </p>
+              </div>
+              <button
+                id="openArtifactsFolder"
+                type="button"
+                data-i18n="openResultsFolder"
+              >
+                Buka folder hasil ↗
+              </button>
+            </div>
+            <div id="resultsList" class="result-list"></div>
+          </section>
+        </section>
+        <section
+          class="inspector"
+          id="inspector"
+          aria-label="Panel kerja dan kendali tugas"
+        >
+          <div class="control-heading">
+            <strong data-i18n="taskControl">Kendali tugas</strong
+            ><span id="taskState" class="state-pill" role="status">Siap</span>
+          </div>
+          <div class="control-summary">
+            <button id="modelSettings" class="control-link">
+              <svg class="icon" aria-hidden="true">
+                <use href="assets/icons.svg#model" /></svg
+              ><span
+                ><strong data-i18n="selectedModel">Model yang dipilih</strong
+                ><small id="modelSummary">Model berikutnya: belum dipilih</small></span
+              ><span aria-hidden="true">›</span>
+            </button>
+            <div class="control-link">
+              <svg class="icon" aria-hidden="true">
+                <use href="assets/icons.svg#folder" /></svg
+              ><span
+                ><strong data-i18n="workspaceName">Ruang kerja</strong
+                ><small id="workspaceSummary">Belum dipilih</small></span
+              >
+            </div>
+            <details class="run-facts-details">
+              <summary data-i18n="detail">Rincian</summary>
+            <dl class="run-facts">
+                <div>
+                  <dt data-i18n="turnLimit">Batas giliran</dt>
+                  <dd id="turnSummary">—</dd>
+                </div>
+                <div>
+                  <dt data-i18n="tokenUsage">Pemakaian token</dt>
+                  <dd id="usageSummary">Belum ada</dd>
+                </div>
+              </dl>
+            </details>
+            <div
+              id="memorySourceSummary"
+              class="memory-source-status"
+              role="status"
+              aria-live="polite"
+            >
+              <strong data-i18n="memorySourcesTitle"
+                >Memori untuk tugas ini</strong
+              >
+              <span id="memoryLocalStatus">Lokal: belum digunakan</span>
+              <span id="memoryExternalStatus">Eksternal: belum digunakan</span>
+            </div>
+            <p class="permission-note">
+              <svg class="icon" aria-hidden="true">
+                <use href="assets/icons.svg#shield" /></svg
+              ><span data-i18n="permissionNote"
+                >Tindakan berisiko memerlukan izinmu.</span
+              >
+            </p>
+          </div>
+          <details id="taskTeamSettings" class="task-team-settings">
+            <summary>
+              <span data-i18n="taskTeamSettingsTitle">Tim untuk tugas ini</span
+              ><small id="taskTeamSummary">Migan saja</small>
+            </summary>
+            <div class="team-row">
+              <label for="taskTeam" data-i18n="taskTeamLabel"
+                >Asisten yang membantu</label
+              >
+              <select id="taskTeam" aria-describedby="taskTeamHint">
+                <option value="">Tanpa delegasi tambahan</option>
+              </select>
+              <span id="taskTeamHint" class="hint" data-i18n="taskTeamHint"
+                >Migan mengerjakan sendiri secara bawaan. Pilih karyawan dari
+                tab Tim AI bila perlu bantuan. Memilih tidak langsung
+                menjalankan model.</span
+              >
+            </div>
+            <div class="team-flags">
+              <label
+                ><input
+                  id="teamTemporary"
+                  type="checkbox"
+                  aria-describedby="teamTemporaryHint"
+                  disabled
+                /><span data-i18n="teamTemporary">Gunakan tim sementara</span
+                ><small id="teamTemporaryHint" data-i18n="teamTemporaryHint"
+                  >Anggota dipakai hanya selama tugas ini. Profil karyawan asal
+                  tetap tersimpan.</small
+                ></label
+              >
+              <label
+                ><input
+                  id="teamLearn"
+                  type="checkbox"
+                  aria-describedby="teamLearnHint"
+                  disabled
+                /><span data-i18n="teamLearn">Simpan pelajaran dari tim</span
+                ><small id="teamLearnHint" data-i18n="teamLearnHint"
+                  >Sekali untuk pengiriman ini: simpan ringkasan bersumber di
+                  memori proyek. Hasilnya masih perlu ditinjau dan tidak
+                  otomatis melatih model.</small
+                ></label
+              >
+            </div>
+            <p class="team-council-hint" data-i18n="teamCouncilHint">
+              Tim dengan beberapa model meminta persetujuan rencana dan batas
+              sebelum berjalan.
+            </p>
+          </details>
+          <div class="workspace-panel-heading">
+            <strong id="workspacePanelTitle">Berkas</strong>
+            <p id="workspacePanelHint">
+              Isi folder proyek yang sedang dipilih.
+            </p>
+          </div>
+          <div id="filesPane" class="pane">
+            <div class="pane-heading">
+              <span data-i18n="projectFiles">BERKAS PROYEK</span
+              ><button id="refreshFiles" title="Refresh">↻</button>
+            </div>
+            <div id="fileList"></div>
+            <div id="filePreview" hidden>
+              <div class="preview-heading">
+                <span id="fileName"></span><button id="closePreview">×</button>
+              </div>
+              <pre id="fileText"></pre>
+              <div
+                id="livePreview"
+                class="live-preview"
+                aria-label="Pratinjau langsung"
+                hidden
+              ></div>
+            </div>
+          </div>
+          <div id="browserPane" class="pane" hidden>
+            <form id="addressForm">
+              <input
+                id="address"
+                placeholder="https://example.com"
+                aria-label="Alamat browser"
+              /><button title="Buka">→</button>
+            </form>
+            <p class="browser-note" data-i18n="browserNote">
+              Sesi browser terpisah. Unduhan, popup, sandi dan izin perangkat
+              dibatasi.
+            </p>
+            <div id="browserSurface"></div>
+          </div>
+          <div id="activityPane" class="pane" hidden>
+            <p class="empty" data-i18n="activityNote">
+              Tindakan dan bukti akan muncul di sini.
+            </p>
+            <div id="activity"></div>
+          </div>
+          <div id="computerPane" class="pane" hidden>
+            <div class="pane-heading">
+              <span>WINDOWS DESKTOP</span
+              ><button id="refreshWindows">Muat jendela</button>
+            </div>
+            <p class="hint">
+              Daftar judul dan pindah fokus jendela. Pengambilan layar, mengetik
+              dan klik desktop belum tersedia.
+            </p>
+            <div id="windowList"></div>
+            <div class="pane-heading"><span>TINGKAT PERINTAH</span></div>
+            <div id="terminalTiers" class="terminal-tiers"></div>
+            <p id="terminalAutoA" class="hint"></p>
+            <div class="pane-heading"><span>POWERSHELL</span></div>
+            <p class="hint">
+              Perintah berjalan di folder proyek. Tinjau persetujuan sebelum
+              dijalankan; tombol Berhenti membatalkan proses.
+            </p>
+            <form id="terminalForm">
+              <textarea
+                id="terminalCommand"
+                rows="3"
+                spellcheck="false"
+                placeholder="Get-Location"
+                aria-label="Perintah PowerShell"
+              ></textarea
+              ><button id="terminalRun" class="primary">
+                Jalankan PowerShell
+              </button>
+            </form>
+            <pre id="terminalOutput" aria-live="polite"></pre>
+          </div>
+          <div id="recoveryPane" class="pane" hidden>
+            <div class="pane-heading">
+              <span>PEMULIHAN & PERBAIKAN</span
+              ><button id="refreshRecovery">Muat ulang</button>
+            </div>
+            <p class="hint">
+              Pekerjaan terputus ditahan tanpa mengulang efek. Periksa hasil
+              sebelumnya sebelum melanjutkan.
+            </p>
+            <div id="recoveryList"></div>
+            <details>
+              <summary>Buat kandidat perbaikan terisolasi</summary>
+              <p class="hint">
+                Pilih source dan tes tepercaya. Opus memperbaiki salinan; tes
+                dan aturan pemeriksa dikunci. Maksimal dua percobaan. Aktivasi
+                memilih versi teruji tanpa menimpa berkas proyek. Salinan diuji
+                dalam sandbox Windows tanpa jaringan. Jika sandbox tidak
+                tersedia, pengujian dihentikan.
+              </p>
+              <form id="improvementForm">
+                <label
+                  >Masalah & hasil yang diharapkan<textarea
+                    id="improvementGoal"
+                    rows="3"
+                    required
+                  ></textarea>
+                </label>
+                <label
+                  >Semua berkas kandidat (satu path per baris)<textarea
+                    id="improvementFiles"
+                    rows="3"
+                    placeholder="src/example.mjs&#10;tests/example.test.mjs"
+                    required
+                  ></textarea>
+                </label>
+                <label
+                  >Source yang boleh diperbaiki<textarea
+                    id="improvementEditable"
+                    rows="2"
+                    placeholder="src/example.mjs"
+                    required
+                  ></textarea>
+                </label>
+                <label
+                  >Tes penerimaan yang dikunci<textarea
+                    id="improvementTests"
+                    rows="2"
+                    placeholder="tests/example.test.mjs"
+                    required
+                  ></textarea>
+                </label>
+                <button id="createCandidate" class="primary">
+                  Buat kandidat
+                </button>
+              </form>
+            </details>
+            <p id="improvementStatus" role="status"></p>
+            <div id="improvementList"></div>
+          </div>
+          <div id="researchPane" class="pane" hidden>
+            <div class="pane-heading">
+              <span>INBOX REFERENSI</span
+              ><button id="researchCatalog">Katalog riset</button
+              ><button id="researchExport">Ekspor Markdown</button>
+            </div>
+            <p class="hint">
+              Simpan tautan Instagram, Threads, repo atau dokumentasi. Impor
+              hanya metadata; halaman belum dibaca atau diverifikasi otomatis.
+            </p>
+            <form id="researchImportForm">
+              <textarea
+                id="researchURLs"
+                rows="3"
+                placeholder="Satu URL per baris"
+                aria-label="URL referensi"
+              ></textarea
+              ><button class="primary">Simpan referensi</button>
+            </form>
+            <input
+              id="researchQuery"
+              type="search"
+              placeholder="Cari judul, catatan, atau status…"
+              aria-label="Cari referensi"
+            />
+            <p id="researchStatus" role="status"></p>
+            <div id="researchList"></div>
+          </div>
+          <div id="skillsPane" class="pane" hidden>
+            <div class="pane-heading">
+              <span data-i18n="availableSkills">SKILL TERSEDIA</span
+              ><button id="mcpSettings">MCP ↗</button>
+            </div>
+            <p class="hint" data-i18n="skillHint">
+              Pilih panduan untuk pekerjaan berikutnya. Memilih skill tidak
+              menjalankan alat atau mengaktifkan MCP.
+            </p>
+            <div id="skillList"></div>
+          </div>
+          <div id="memoryPane" class="pane" hidden>
+            <div class="pane-heading">
+              <span data-i18n="projectMemory">MEMORI PROYEK</span
+              ><button id="memoryConnection">Otak eksternal ↗</button>
+            </div>
+            <p class="hint" data-i18n="memoryHint">
+              Catatan lokal untuk folder ini. Catatan Anda dan ringkasan sesi
+              ditampilkan dengan sumbernya; bukan fakta yang sudah diverifikasi.
+            </p>
+            <form id="memorySearchForm" class="memory-search">
+              <input
+                id="memoryQuery"
+                type="search"
+                maxlength="200"
+                placeholder="Cari memori proyek…"
+                aria-label="Cari memori proyek"
+              /><button data-i18n="searchMemory">Cari</button>
+            </form>
+            <div id="memoryList"></div>
+            <form id="memoryNoteForm">
+              <label
+                ><span data-i18n="newMemory">Tambahkan catatan</span
+                ><textarea
+                  id="memoryNote"
+                  rows="3"
+                  maxlength="8000"
+                  required
+                  aria-label="Catatan memori proyek"
+                ></textarea>
+              </label>
+              <p class="hint" data-i18n="memoryPrivacy">
+                Disimpan di laptop untuk folder ini. Jangan masukkan token atau
+                kata sandi.
+              </p>
+              <button id="memorySave" class="primary" data-i18n="saveMemory">
+                Simpan catatan
+              </button>
+            </form>
+            <p id="notesStatus" role="status" class="hint"></p>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer class="status-bar">
+      <span
+        ><i class="status-dot"></i
+        ><span data-i18n="localDesktop">Desktop lokal</span></span
+      ><span id="systemSummary" role="status">Menyiapkan ruang kerja…</span
+      ><span class="footer-scope" data-i18n="oneTask"
+        >Satu pekerjaan aktif · tindakan berizin</span
+      >
+    </footer>
+    <dialog id="settingsDialog">
+      <form id="settingsForm">
+        <div class="dialog-title">
+          <div>
+            <span class="eyebrow">YOUR MODELS, YOUR WORKSPACE</span>
+            <h2 data-i18n="settingsTitle">Koneksi model</h2>
+          </div>
+          <button type="button" id="closeSettings">×</button>
+        </div>
+        <p class="hint" data-i18n="keyHelp">
+          Gunakan API key platform. Kunci dienkripsi oleh Windows dan tidak
+          ditampilkan kembali. Menyimpan tidak memanggil model.
+        </p>
+        <label
+          ><span data-i18n="activeProvider">Penyedia aktif</span
+          ><select id="activeProvider">
+            <option value="openai">OpenAI · API</option>
+            <option value="anthropic">Anthropic · API</option>
+            <option value="kimi">Kimi · Moonshot API</option>
+            <option value="ollama">Ollama · HOMESRV / remote</option>
+          </select></label
+        >
+        <div class="provider-grid">
+          <fieldset>
+            <legend>OpenAI</legend>
+            <label
+              >Model ID<input
+                id="openaiModel"
+                placeholder="ID model yang tersedia di akun Anda"
+                maxlength="160" /></label
+            ><label
+              >API key<input
+                id="openaiKey"
+                type="password"
+                autocomplete="off"
+                placeholder="Kosong = pertahankan kunci tersimpan" /></label
+            ><small id="openaiConfigured"></small>
+          </fieldset>
+          <fieldset>
+            <legend>Anthropic</legend>
+            <label
+              >Model<select id="anthropicModel">
+                <option value="claude-sonnet-5-5">Sonnet 5.5</option>
+                <option value="claude-opus-5-5">Opus 5.5</option>
+              </select></label
+            ><label
+              >API key<input
+                id="anthropicKey"
+                type="password"
+                autocomplete="off"
+                placeholder="Kosong = pertahankan kunci tersimpan" /></label
+            ><label
+              >ID workspace (opsional)<input
+                id="anthropicWorkspace"
+                placeholder="wrkspc_… · wajib bila kunci tidak terikat workspace"
+                spellcheck="false"
+                autocomplete="off" /></label
+            ><small id="anthropicConfigured"></small>
+          </fieldset>
+        </div>
+        <fieldset>
+          <legend>Kimi · Moonshot API</legend>
+          <label
+            >Model ID<input
+              id="kimiModel"
+              placeholder="kimi-k2.6"
+              maxlength="160"
+          /></label>
+          <label
+            >API key<input
+              id="kimiKey"
+              type="password"
+              autocomplete="off"
+              placeholder="Kosong = pertahankan kunci tersimpan"
+          /></label>
+          <small id="kimiConfigured"></small>
+        </fieldset>
+        <fieldset id="geminiSettings">
+          <legend>Gemini · Google AI API</legend>
+          <label
+            >API key<input
+              id="geminiKey"
+              type="password"
+              autocomplete="off"
+              placeholder="Kosong = pertahankan kunci tersimpan"
+          /></label>
+          <small id="geminiConfigured"></small>
+          <label
+            >Model dari akun Anda<select id="geminiModels" disabled>
+              <option value="">Simpan kunci dulu, daftar model dimuat otomatis</option>
+            </select></label
+          >
+          <button type="button" id="geminiAddModel" disabled>
+            Pakai model ini
+          </button>
+          <small id="geminiError" role="alert"></small>
+        </fieldset>
+        <fieldset id="runpodSettings">
+          <legend>RunPod · endpoint serverless</legend>
+          <div class="provider-grid">
+            <label
+              >ID endpoint<input
+                id="runpodEndpointId"
+                placeholder="huruf kecil dan angka, 8–40 karakter"
+                maxlength="40"
+                spellcheck="false"
+                autocomplete="off" /></label
+            ><label
+              >Model ID<input
+                id="runpodModel"
+                placeholder="mis. Qwen/Qwen3-8B"
+                maxlength="160"
+                spellcheck="false"
+            /></label>
+          </div>
+          <label
+            >API key<input
+              id="runpodKey"
+              type="password"
+              autocomplete="off"
+              placeholder="Kosong = pertahankan kunci tersimpan"
+          /></label>
+          <label
+            >Batas waktu (detik, opsional)<input
+              id="runpodTimeout"
+              type="number"
+              min="30"
+              max="1800"
+              step="1"
+              placeholder="30–1800"
+          /></label>
+          <small id="runpodConfigured"></small>
+          <small id="runpodError" role="alert"></small>
+        </fieldset>
+        <fieldset>
+          <legend>Ollama · remote CPU/GPU</legend>
+          <div class="provider-grid">
+            <label
+              >Endpoint<input
+                id="ollamaURL"
+                placeholder="http://hostname:11434" /></label
+            ><label
+              >Model ID<input
+                id="ollamaModel"
+                placeholder="Model terpasang, bukan tebakan"
+            /></label>
+          </div>
+          <label
+            >Alamat cadangan<input
+              id="ollamaCadangan"
+              placeholder="http://nama-mesin.local:11434"
+          /></label>
+          <small
+            >Dicoba berurutan bila Endpoint tidak menjawab (pisahkan dengan koma,
+            maks. 3). Contoh: Endpoint lewat VPN, cadangan nama mesin di
+            jaringan rumah.</small
+          >
+          <small data-i18n="ollamaHelp"
+            >Tidak menjalankan atau mengunduh model di laptop. Pastikan mesin
+            remote dan kemampuan model sudah diuji.</small
+          >
+        </fieldset>
+        <fieldset id="memorySettings">
+          <legend>Ingatan otak eksternal</legend>
+          <p class="hint">
+            Ambil konteks proyek dari ingatan pribadi sebelum bekerja. Sambungan
+            MCP tetap perlu persetujuan saat dipakai.
+          </p>
+          <button type="button" id="connectBrain">Sambungkan otak eksternal lokal</button
+          ><label
+            ><span>Gunakan ingatan untuk tugas baru</span
+            ><input type="checkbox" id="memoryEnabled" /></label
+          ><small id="memoryStatus"></small
+          ><label
+            ><span>Kirim catatan otak eksternal ke model</span
+            ><input type="checkbox" id="brainAktif" /></label
+          ><small
+            >Perlu "Gunakan ingatan" juga. Potongan permintaan (maks. 500 huruf,
+            rahasia disensor) dikirim ke server otak eksternal untuk mencari catatan.
+            Catatan yang cocok hanya dikirim ke model lokal (server rumah), kecuali Anda
+            izinkan penyedia di bawah.</small
+          ><label
+            ><span>Izinkan untuk Anthropic (Claude)</span
+            ><input type="checkbox" id="brainAnthropic" /></label
+          ><label
+            ><span>Izinkan untuk OpenAI</span
+            ><input type="checkbox" id="brainOpenai" /></label
+          ><small
+            >Kimi, Gemini, DeepSeek dan RunPod terkunci sampai ketentuan
+            penggunaan data mereka dikutip.</small
+          >
+        </fieldset>
+        <details id="priceSettings">
+          <summary>Harga model</summary>
+          <p class="hint">
+            USD per 1 juta token. Harga bawaan sudah disahkan dan bersumber.
+            Harga yang Anda isi menimpa bawaan untuk model yang sama. Model
+            berbayar tanpa harga ditolak agar pagu biaya tetap berlaku.
+            Kosongkan kolom cache untuk memakai harga input.
+          </p>
+          <div class="price-table">
+            <div class="price-head" aria-hidden="true">
+              <span>Model</span><span>Input</span><span>Output</span
+              ><span>Baca cache</span><span>Tulis cache</span><span></span>
+            </div>
+            <div id="priceRows"></div>
+          </div>
+          <button type="button" id="addPrice">Tambah model</button>
+        </details>
+        <details id="advancedSettings">
+          <summary data-i18n="advanced">Router model & MCP lanjutan</summary>
+          <p class="hint">
+            Otomatis memakai 9 kategori tugas. Model dipilih sebelum bekerja;
+            izin alat tetap terpisah.
+          </p>
+          <label
+            >Profil model (JSON)<textarea
+              id="modelRegistry"
+              rows="5"
+              spellcheck="false"
+            ></textarea>
+          </label>
+          <label
+            >Peta 9 rute (JSON)<textarea
+              id="routeMap"
+              rows="4"
+              spellcheck="false"
+            ></textarea>
+          </label>
+          <fieldset>
+            <legend>Tambahkan token lain ke brankas</legend>
+            <label
+              >ID kredensial<input
+                id="credentialId"
+                placeholder="misalnya anthropic-review"
+                maxlength="60" /></label
+            ><label
+              >Penyedia<select id="credentialProvider">
+                <option value="anthropic">Anthropic</option>
+                <option value="kimi">Kimi</option>
+                <option value="openai">OpenAI</option>
+              </select></label
+            ><label
+              >API key<input
+                id="credentialKey"
+                type="password"
+                autocomplete="off"
+                placeholder="Kosong = tidak menambah token"
+            /></label>
+            <p id="credentialList" class="hint"></p>
+          </fieldset>
+          <div class="provider-grid">
+            <label
+              ><span data-i18n="lightRoute">Tanya / ringkasan</span
+              ><select id="lightRoute">
+                <option value="">Ikuti penyedia aktif</option>
+                <option>openai</option>
+                <option>anthropic</option>
+                <option>ollama</option>
+              </select></label
+            ><label
+              ><span data-i18n="codingRoute">Coding / kerja</span
+              ><select id="codingRoute">
+                <option value="">Ikuti penyedia aktif</option>
+                <option>openai</option>
+                <option>anthropic</option>
+                <option>ollama</option>
+              </select></label
+            >
+          </div>
+          <label
+            >Folder kerja yang boleh dipindah (satu per baris, maks 5)<textarea
+              id="devRoots"
+              rows="3"
+              spellcheck="false"
+              placeholder="C:\Dev"
+            ></textarea
+          ></label>
+          <p id="devRootsStatus" class="hint"></p>
+          <p id="devRootsError" class="error" role="alert"></p>
+          <label
+            >Batas giliran model<input
+              id="maxTurns"
+              type="number"
+              min="1"
+              max="60"
+              value="12" /></label
+          ><label
+            >Server MCP (JSON)<textarea
+              id="mcpConfig"
+              rows="4"
+              spellcheck="false"
+              placeholder='[{"id":"memory","command":"node","args":["C:/path/server.js"],"allowTools":["brain_context","brain_search"]}]'
+            ></textarea>
+          </label>
+          <p class="warning" data-i18n="mcpWarning">
+            MCP, shell dan SSH adalah akses tepercaya tanpa sandbox OS. Tinjau
+            perintah persisnya. Jangan masukkan rahasia ke argumen atau JSON.
+          </p>
+        </details>
+        <div id="settingsError" role="alert"></div>
+        <button class="primary" data-i18n="save">Simpan koneksi</button>
+        <button type="button" id="testConnection">
+          Simpan & uji jawaban (maks. 128 token)
+        </button>
+        <p id="connectionResult" class="hint" role="status"></p>
+      </form>
+    </dialog>
+    <dialog id="approvalDialog">
+      <div class="approval-top">
+        <span class="approval-icon">↗</span>
+        <div>
+          <span class="eyebrow" data-i18n="yourDecision">KEPUTUSAN ANDA</span>
+          <h2 data-i18n="review">Tinjau tindakan ini</h2>
+        </div>
+      </div>
+      <p id="approvalTool"></p>
+      <p id="approvalWarning" class="warning"></p>
+      <pre id="approvalArgs"></pre>
+      <p class="hint" data-i18n="oneShot">
+        Izin ini berlaku satu kali untuk tindakan yang ditampilkan. Diam bukan
+        persetujuan.
+      </p>
+      <div class="approval-actions">
+        <button id="approvalStop" class="danger" data-i18n="stop">
+          ■ Berhenti
+        </button>
+        <button id="deny" data-i18n="deny">Tolak</button
+        ><button id="allow" class="primary" data-i18n="allow">
+          Setujui satu kali
+        </button>
+      </div>
+    </dialog>
+    <dialog id="projectDialog" aria-labelledby="projectTitle">
+      <span class="eyebrow" data-i18n="projectEyebrow">PROYEK BARU</span>
+      <h2 id="projectTitle" data-i18n="projectTitle">
+        Bangun aplikasi di folder proyeknya sendiri
+      </h2>
+      <p class="hint" data-i18n="projectHint">
+        Agen tidak menulis ke folder yang sedang terbuka kecuali kamu
+        memilihnya. Beri nama proyek, lalu pilih tempat folder itu dibuat.
+      </p>
+      <label for="projectName" data-i18n="projectNameLabel">Nama proyek</label>
+      <input id="projectName" maxlength="64" autocomplete="off" />
+      <p id="projectError" class="warning" role="alert"></p>
+      <div class="approval-actions">
+        <button id="cancelProject" data-i18n="cancel">Batal</button>
+        <button id="useCurrentFolder" data-i18n="useCurrentFolder">
+          Pakai folder ini (agen boleh menulis di sini)
+        </button>
+        <button id="createProjectBtn" class="primary" data-i18n="createProject">
+          Buat proyek baru
+        </button>
+      </div>
+    </dialog>
+
+    <div id="toast" role="alert" hidden></div>
+    <script src="../node_modules/commonmark/dist/commonmark.min.js"></script>
+    <script src="../node_modules/dompurify/dist/purify.min.js"></script>
+    <script src="markdown.js"></script>
+    <script src="teks-awam.js"></script>
+    <script src="galaxy.js"></script>
+    <script src="workspace-tabs.js"></script>
+    <script src="memory-status.js"></script>
+    <script src="price-table.js"></script>
+    <script src="model-choice.js"></script>
+    <script src="recovery-banner.js"></script>
+    <script src="runs-filter.js"></script>
+    <script src="sedang-dikerjakan.js"></script>
+    <script src="terminal-tiers.js"></script>
+    <script src="dev-roots.js"></script>
+    <script src="kartu-hold.js"></script>
+    <script src="gemini-registry.js"></script>
+    <script src="app.js"></script>
+    <script src="apa-yang-baru.js"></script>
+  </body>
+</html>

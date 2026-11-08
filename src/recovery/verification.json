@@ -1,0 +1,54 @@
+{
+  "at": "2026-10-21T15:33:42.1434935Z",
+  "phase": "GREEN",
+  "command": "node --test tests/unit/recovery.test.mjs tests/unit/runtime.test.mjs",
+  "exitCode": 0,
+  "passed": 21,
+  "recoveryTests": 7,
+  "skipped": 0,
+  "platform": "win32",
+  "checks": [
+    "SQLite restart HOLD no replay",
+    "PID reuse no unrelated kill",
+    "no raw commands or output in journal",
+    "real Windows Job Object",
+    "UTF-8 and quoted args",
+    "bounded output Stop",
+    "forced host crash kills child and grandchild",
+    "same-handle verified termination"
+  ],
+  "files": [
+    {
+      "path": "src/recovery/executor.mjs",
+      "sha256": "a484299e8b1994b0d4322e56134f49f49193cfc3641419a6b2ddbf894dfcda88"
+    },
+    {
+      "path": "src/recovery/journal.mjs",
+      "sha256": "dd4552b25ea6f936810e2fbe197853a3e99ac2ca5e489fa1b59a89234b3f2384"
+    },
+    {
+      "path": "src/recovery/process-identity.ps1",
+      "sha256": "7ef5359f046156048e1de8ed04a2da01b5f9438939753eed4696e5983b8ce087"
+    },
+    {
+      "path": "src/recovery/windows-job.ps1",
+      "sha256": "c966ab842be9710b7f34f7bb04f28b7317322c1146919e4dcaceb472388a8eb3"
+    },
+    {
+      "path": "src/tools/process.mjs",
+      "sha256": "33586d95e997d359e67ce8679ab70eb9e5f7f514079757096b0a6a6b6dd1b366"
+    },
+    {
+      "path": "tests/unit/recovery.test.mjs",
+      "sha256": "0171a771b671af9f4011e60c639a5c02e2b7e47b6597fa337f2edc8f2b99a731"
+    },
+    {
+      "path": "tests/fixtures/recovery-child.mjs",
+      "sha256": "e936d0a567fa669d754e9cfa8c8e51e8ea3b6b5af10b8723ef6a5f2d3babb0c0"
+    },
+    {
+      "path": "tests/fixtures/recovery-host.mjs",
+      "sha256": "063d31e4ae6ab00c608e1ccf34f3e713e5796f12e2fc4dbd899dfdce29f4ee85"
+    }
+  ]
+}

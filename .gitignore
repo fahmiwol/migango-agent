@@ -1,0 +1,11 @@
+node_modules/
+evidence/
+tmp-migan/
+exports/
+*.log
+*.exe
+*.dll
+*.png
+!ui/assets/*.png
+.env
+.env.*

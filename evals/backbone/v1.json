@@ -1,0 +1,202 @@
+{
+  "v": 1,
+  "nama": "backbone-v1",
+  "catatan": "Set tugas kecil polos vs backbone (RISET-013). Semua fixture fiktif. Dinilai deterministik oleh src/eval/backbone.mjs nilai(). Batasan di prompt bersifat publik; kunci jawaban hanya di 'nilai'.",
+  "tugas": [
+    {
+      "id": "koding-nilai-fungsi",
+      "kategori": "koding",
+      "prompt": "Berapa hasil totalHarga dari src/harga.js untuk items [{harga: 12000, jumlah: 3}, {harga: 4500, jumlah: 2}] dan diskon 15? Jawab satu bilangan bulat tanpa titik.",
+      "format": "^\\s*\\d+\\s*$",
+      "berkas": {
+        "src/harga.js": "export function totalHarga(items, diskon) {\n  const kotor = items.reduce((s, i) => s + i.harga * i.jumlah, 0);\n  return diskon > 0 ? kotor - Math.floor(kotor * diskon / 100) : kotor;\n}\n"
+      },
+      "nilai": { "jawabanCocok": ["(^|\\D)38[.,]?250(\\D|$)"] }
+    },
+    {
+      "id": "koding-cari-fungsi",
+      "kategori": "koding",
+      "prompt": "Di berkas mana fungsi normalisasiTelepon didefinisikan? Jawab dengan path berkas saja.",
+      "berkas": {
+        "src/index.js": "import { normalisasiTelepon } from './util/teks.js';\nimport { bulatkan } from './util/angka.js';\nconsole.log(normalisasiTelepon('0812 3456'), bulatkan(2.5));\n",
+        "src/util/teks.js": "export function rapikanSpasi(s) { return s.replace(/\\s+/g, ' ').trim(); }\nexport function normalisasiTelepon(s) { return s.replace(/\\D/g, '').replace(/^0/, '62'); }\n",
+        "src/util/angka.js": "export function bulatkan(x) { return Math.round(x); }\n// catatan: normalisasiTelepon ada di modul teks\n"
+      },
+      "nilai": { "jawabanMemuat": ["src/util/teks.js"] }
+    },
+    {
+      "id": "koding-baris-bug",
+      "kategori": "koding",
+      "prompt": "Fungsi rataRata di src/rata.js mengembalikan NaN. Nomor baris berapa yang salah? Jawab satu angka.",
+      "format": "^\\s*\\d+\\s*$",
+      "berkas": {
+        "src/rata.js": "export function rataRata(xs) {\n  let total = 0;\n  for (let i = 0; i <= xs.length; i++) total += xs[i];\n  return total / xs.length;\n}\n"
+      },
+      "nilai": { "jawabanCocok": ["^\\D*3\\D*$"] }
+    },
+    {
+      "id": "koding-versi-dependensi",
+      "kategori": "koding",
+      "prompt": "Versi paket zod berapa yang diminta package.json? Jawab nomor versinya tanpa tanda ^.",
+      "berkas": {
+        "package.json": "{\n  \"name\": \"contoh\",\n  \"dependencies\": { \"express\": \"^4.19.2\", \"zod\": \"^3.23.8\" },\n  \"devDependencies\": { \"vitest\": \"^2.1.1\" }\n}\n"
+      },
+      "nilai": { "jawabanMemuat": ["3.23.8"], "dilarangCocok": ["4\\.19\\.2", "2\\.1\\.1"] }
+    },
+    {
+      "id": "riset-cuti-kontrak",
+      "kategori": "riset",
+      "prompt": "Berapa hari cuti tahunan untuk karyawan kontrak? Jawab angkanya dan sebutkan path berkas sumbernya.",
+      "berkas": {
+        "docs/kebijakan-cuti.md": "# Kebijakan cuti\nKaryawan tetap mendapat 14 hari cuti tahunan.\nKaryawan kontrak mendapat 10 hari cuti tahunan.\nCuti tidak dapat diuangkan.\n",
+        "docs/kebijakan-lembur.md": "# Kebijakan lembur\nLembur dibayar 1,5 kali upah per jam untuk dua jam pertama.\nLembur hari libur dibayar 2 kali.\n",
+        "docs/panduan-perjalanan.md": "# Panduan perjalanan dinas\nUang harian perjalanan dinas Rp350.000 per hari.\nTiket dipesan lewat bagian umum paling lambat 3 hari sebelumnya.\n"
+      },
+      "nilai": { "jawabanCocok": ["(^|\\D)10(\\D|$)"], "sumberWajib": ["docs/kebijakan-cuti.md"] }
+    },
+    {
+      "id": "riset-uang-harian",
+      "kategori": "riset",
+      "prompt": "Berapa uang harian perjalanan dinas per hari? Jawab nominalnya dan sebutkan path berkas sumbernya.",
+      "berkas": {
+        "docs/kebijakan-cuti.md": "# Kebijakan cuti\nKaryawan tetap mendapat 14 hari cuti tahunan.\nKaryawan kontrak mendapat 10 hari cuti tahunan.\n",
+        "docs/kebijakan-lembur.md": "# Kebijakan lembur\nLembur dibayar 1,5 kali upah per jam untuk dua jam pertama.\nUang makan lembur Rp50.000 per malam.\n",
+        "docs/panduan-perjalanan.md": "# Panduan perjalanan dinas\nUang harian perjalanan dinas Rp350.000 per hari.\nPenginapan diganti sesuai kuitansi.\n"
+      },
+      "nilai": { "jawabanCocok": ["350[.,]?000"], "sumberWajib": ["docs/panduan-perjalanan.md"] }
+    },
+    {
+      "id": "riset-node-minimal",
+      "kategori": "riset",
+      "prompt": "Versi Node minimal berapa yang dibutuhkan versi 2.4? Jawab angka versi utama Node dan sebutkan path berkas sumbernya.",
+      "berkas": {
+        "docs/catatan-rilis-v1.md": "# Rilis 1.9\nVersi 1.9 mendukung Node 14 dan Node 16.\n",
+        "docs/catatan-rilis-v2.md": "# Rilis 2.4\nVersi 2.4 menghapus dukungan Node 16.\nMinimal Node 18 untuk versi 2.4 ke atas.\n",
+        "docs/faq.md": "# FAQ\nPertanyaan umum tentang instalasi. Lihat catatan rilis untuk kebutuhan versi.\n"
+      },
+      "nilai": { "jawabanCocok": ["(^|\\D)18(\\D|$)"], "sumberWajib": ["docs/catatan-rilis-v2.md"] }
+    },
+    {
+      "id": "riset-harga-berlaku",
+      "kategori": "riset",
+      "prompt": "Berapa harga Paket Dasar per bulan yang berlaku sekarang? Jawab satu nominal saja dan sebutkan path berkas sumbernya.",
+      "berkas": {
+        "docs/harga-2025.md": "# Harga 2025\nPaket Dasar Rp99.000 per bulan, berlaku Januari 2025.\n",
+        "docs/harga-2026.md": "# Harga 2026\nPaket Dasar Rp129.000 per bulan, berlaku Maret 2026 dan menggantikan harga lama.\n"
+      },
+      "nilai": { "jawabanCocok": ["129[.,]?000"], "dilarangCocok": ["(^|[^\\d])99[.,]?000"], "sumberWajib": ["docs/harga-2026.md"] }
+    },
+    {
+      "id": "konten-judul-rapat",
+      "kategori": "konten",
+      "prompt": "Tulis satu judul pengumuman rapat tim hari Senin pukul 09.00. Maksimal 8 kata. Wajib memuat kata Senin dan 09.00. Jawab judulnya saja.",
+      "batasan": { "maksKata": 8, "wajibKata": ["Senin", "09.00"] },
+      "berkas": {},
+      "nilai": { "maksKata": 8, "wajibKata": ["Senin", "09.00"] }
+    },
+    {
+      "id": "konten-ringkas-butir",
+      "kategori": "konten",
+      "prompt": "Ringkas catatan.md menjadi tepat 3 butir, setiap butir satu baris yang diawali '- '. Butir harus menyebut anggaran, jadwal, dan vendor. Jawab butirnya saja.",
+      "batasan": { "butirTepat": 3, "wajibKata": ["anggaran", "jadwal", "vendor"] },
+      "berkas": {
+        "catatan.md": "Rapat proyek minggu ini membahas tiga hal. Anggaran naik 10 persen karena harga bahan. Jadwal peluncuran mundur dua minggu menjadi akhir bulan. Vendor percetakan baru sudah dipilih setelah tiga penawaran.\n"
+      },
+      "nilai": { "butirTepat": 3, "wajibKata": ["anggaran", "jadwal", "vendor"] }
+    },
+    {
+      "id": "konten-subjek-email",
+      "kategori": "konten",
+      "prompt": "Tulis satu subjek email pengingat pembayaran. Maksimal 60 karakter. Wajib memuat INV-2047 dan frasa jatuh tempo. Jawab subjeknya saja.",
+      "batasan": { "maksKarakter": 60, "wajibKata": ["INV-2047", "jatuh tempo"] },
+      "berkas": {},
+      "nilai": { "maksKarakter": 60, "wajibKata": ["INV-2047", "jatuh tempo"] }
+    },
+    {
+      "id": "konten-tabel-kalimat",
+      "kategori": "konten",
+      "prompt": "Dari tabel di data.md, tulis tepat satu kalimat dengan pola: <Produk> paling banyak terjual dengan <angka> unit. Jawab kalimatnya saja.",
+      "format": "^[^\\n]+$",
+      "berkas": {
+        "data.md": "| Produk | Unit |\n|---|---|\n| Teh | 120 |\n| Kopi | 340 |\n| Cokelat | 95 |\n"
+      },
+      "nilai": { "jawabanCocok": ["^\\s*Kopi paling banyak terjual dengan 340 unit\\.?\\s*$"] }
+    },
+    {
+      "id": "operasi-hitung-error",
+      "kategori": "operasi",
+      "prompt": "Berapa baris berlevel ERROR di logs/app.log? Jawab satu angka.",
+      "format": "^\\s*\\d+\\s*$",
+      "berkas": {
+        "logs/app.log": "2026-10-01 08:00:01 INFO server mulai\n2026-10-01 08:00:05 WARN cache kosong\n2026-10-01 08:01:10 ERROR koneksi db gagal\n2026-10-01 08:01:15 INFO coba ulang\n2026-10-01 08:01:20 ERROR koneksi db gagal\n2026-10-01 08:02:00 INFO terhubung\n2026-10-01 09:15:42 ERROR timeout permintaan /laporan\n2026-10-01 09:20:00 INFO pesan ERROR lama dibersihkan\n"
+      },
+      "nilai": { "jawabanCocok": ["^\\D*3\\D*$"] }
+    },
+    {
+      "id": "operasi-port-tls",
+      "kategori": "operasi",
+      "prompt": "Port berapa yang dipakai TLS menurut config/server.json? Jawab satu angka.",
+      "format": "^\\s*\\d+\\s*$",
+      "berkas": {
+        "config/server.json": "{\n  \"port\": 8080,\n  \"host\": \"0.0.0.0\",\n  \"tls\": { \"enabled\": true, \"port\": 8443 },\n  \"admin\": { \"port\": 9090 }\n}\n"
+      },
+      "nilai": { "jawabanCocok": ["(^|\\D)8443(\\D|$)"], "dilarangCocok": ["8080", "9090"] }
+    },
+    {
+      "id": "operasi-izin-perintah",
+      "kategori": "operasi",
+      "prompt": "Menurut daftar-izin.txt, perintah mana yang boleh dijalankan? A) git push origin main  B) npm run build  C) rm -rf dist. Jawab satu huruf.",
+      "format": "^\\s*[ABC]\\s*$",
+      "berkas": {
+        "daftar-izin.txt": "# Hanya awalan perintah berikut yang diizinkan\ngit status\ngit log\nnpm run build\nnpm run test\n"
+      },
+      "nilai": { "jawabanCocok": ["(^|[^A-Za-z])B([^A-Za-z]|$)"], "dilarangCocok": ["(^|[^A-Za-z])[AC]([^A-Za-z]|$)"] }
+    },
+    {
+      "id": "operasi-jadwal-cron",
+      "kategori": "operasi",
+      "prompt": "Menurut jadwal.txt, backup.sh berjalan jam berapa dan hari apa? Jawab dengan format HH.MM Hari.",
+      "berkas": {
+        "jadwal.txt": "# menit jam tanggal bulan hari-minggu perintah\n0 * * * * rotasi-log.sh\n30 2 * * 1 backup.sh\n"
+      },
+      "nilai": { "jawabanCocok": ["(^|\\D)0?2[.:]30(\\D|$)", "senin"] }
+    },
+    {
+      "id": "data-pendapatan-jawa",
+      "kategori": "data",
+      "prompt": "Dari penjualan.csv, berapa total pendapatan (unit x harga) wilayah Jawa? Jawab satu bilangan bulat.",
+      "berkas": {
+        "penjualan.csv": "tanggal,wilayah,unit,harga\n2026-01-03,Jawa,12,15000\n2026-01-04,Bali,7,15000\n2026-01-05,Jawa,5,18000\n2026-01-06,Sumatra,9,15000\n2026-01-07,Bali,4,18000\n"
+      },
+      "nilai": { "jawabanCocok": ["(^|\\D)270[.,]?000(\\D|$)"] }
+    },
+    {
+      "id": "data-wilayah-terbanyak",
+      "kategori": "data",
+      "prompt": "Dari penjualan.csv, wilayah mana yang jumlah unitnya terbanyak? Jawab nama wilayahnya saja.",
+      "berkas": {
+        "penjualan.csv": "tanggal,wilayah,unit,harga\n2026-01-03,Jawa,12,15000\n2026-01-04,Bali,7,15000\n2026-01-05,Jawa,5,18000\n2026-01-06,Sumatra,9,15000\n2026-01-07,Bali,4,18000\n"
+      },
+      "nilai": { "jawabanCocok": ["jawa"], "dilarangCocok": ["bali", "sumatra"] }
+    },
+    {
+      "id": "data-rata-unit",
+      "kategori": "data",
+      "prompt": "Dari penjualan.csv, berapa rata-rata unit per transaksi? Jawab satu angka dengan satu desimal.",
+      "berkas": {
+        "penjualan.csv": "tanggal,wilayah,unit,harga\n2026-01-03,Jawa,12,15000\n2026-01-04,Bali,7,15000\n2026-01-05,Jawa,5,18000\n2026-01-06,Sumatra,9,15000\n2026-01-07,Bali,4,18000\n"
+      },
+      "nilai": { "jawabanCocok": ["(^|[^\\d.,])7[.,]4(\\D|$)"] }
+    },
+    {
+      "id": "data-median",
+      "kategori": "data",
+      "prompt": "Dari nilai.csv, berapa median kolom nilai? Jawab satu angka.",
+      "format": "^\\s*\\d+([.,]\\d+)?\\s*$",
+      "berkas": {
+        "nilai.csv": "nama,nilai\nP1,78\nP2,91\nP3,85\nP4,66\nP5,70\n"
+      },
+      "nilai": { "jawabanCocok": ["^\\D*78([.,]0+)?\\D*$"] }
+    }
+  ]
+}

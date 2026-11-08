@@ -1,0 +1,710 @@
+/* The approved MiganGO shell stays in place; tabs organize the existing centre workspace. */
+.workspace-tabbar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0 12px 10px 20px;
+  padding: 3px 0 8px;
+  border-bottom: 1px solid var(--line);
+  flex: 0 0 auto;
+}
+.workspace-tabbar button {
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 9px 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.workspace-tabbar button[aria-selected="true"] {
+  background: #1a2d43;
+  border-color: #405b78;
+  color: var(--text);
+  box-shadow: inset 0 -2px var(--accent);
+}
+.workspace-tabbar button:hover {
+  color: var(--text);
+  background: #182a40;
+}
+.workspace-tabbar .icon {
+  width: 16px;
+  height: 16px;
+}
+.workspace-tab-note {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--muted);
+}
+#chatWorkspace {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  flex: 1;
+  min-height: 0;
+}
+.workspace-center-panel {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, #102037, #0d192a);
+  padding: 18px;
+}
+#teamWorkspace {
+  padding: 0;
+  overflow: hidden;
+}
+#agentsDialog[open] {
+  position: static;
+  inset: auto;
+  display: block;
+  max-width: none;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 18px;
+  overflow: auto;
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  box-shadow: none;
+  color: var(--text);
+}
+.team-overview {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 14px 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.agents-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+.agents-top > div {
+  min-width: 0;
+}
+.agents-top h2 {
+  font-size: 20px;
+  margin: 4px 0;
+}
+.agents-top .hint {
+  font-size: 11px;
+}
+.agents-top #closeAgents {
+  font-size: 10px;
+  white-space: nowrap;
+  padding: 7px 9px;
+}
+.team-primary-note {
+  padding: 6px 10px;
+  border: 1px solid #72582f;
+  background: #32281b;
+  color: #ffd293;
+  border-radius: 20px;
+  font-size: 11px;
+}
+.agents-list {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 14px 0;
+}
+.agent-card {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 15px !important;
+  background: #14263b;
+  border: 1px solid #304862;
+  border-radius: 10px;
+  min-width: 0;
+  transition:
+    border-color 0.12s ease,
+    background 0.12s ease;
+}
+.agent-card:hover {
+  border-color: #637b94;
+  background: #182c43;
+}
+.agent-card[data-agent-id="migan"] {
+  border-color: #956a31;
+  background: linear-gradient(120deg, #302718, #17283b);
+}
+.agent-face {
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px !important;
+  background: color-mix(in srgb, var(--agent-color) 14%, #14263b);
+  border: 1px solid color-mix(in srgb, var(--agent-color) 50%, #304862);
+  color: var(--agent-color);
+  font-size: 19px;
+  font-weight: 700;
+}
+.agent-card-body {
+  flex: 1;
+  min-width: 0;
+}
+.agent-card strong {
+  font-size: 14px;
+  display: block;
+}
+.agent-role {
+  display: block;
+  font-size: 12px;
+  color: #cfdaec;
+  margin-top: 4px;
+}
+.agent-meta {
+  display: block;
+  font-size: 10px !important;
+  color: var(--muted);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.agent-status {
+  display: inline-block;
+  font-size: 10px !important;
+  color: var(--success);
+  margin-top: 7px;
+}
+.agent-actions {
+  display: flex;
+  gap: 7px;
+  width: 100%;
+  padding-left: 54px;
+}
+.agent-actions button {
+  font-size: 10px !important;
+  padding: 5px 8px;
+}
+.agent-remove {
+  color: #ffb5a8 !important;
+  background: transparent !important;
+  border-color: #7c5149 !important;
+}
+.employee-detail {
+  padding: 16px;
+  border: 1px solid #3a526e;
+  background: #0c1a2b;
+  border-radius: 9px;
+  margin-bottom: 14px;
+}
+.employee-detail h3 {
+  font-size: 16px;
+  margin: 3px 0 7px;
+}
+.employee-detail p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+  margin: 6px 0;
+}
+.employee-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.employee-tags span {
+  font-size: 10px;
+  padding: 4px 8px;
+  border: 1px solid #3c536c;
+  border-radius: 20px;
+  background: #192d43;
+  color: #d0e0f3;
+}
+.employee-detail details {
+  font-size: 11px;
+  margin-top: 13px;
+  color: var(--muted);
+}
+.team-recruit {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  margin-top: 12px;
+}
+.team-recruit > summary {
+  font-size: 12px;
+  color: var(--text);
+  cursor: pointer;
+}
+.team-recruit .template-picker {
+  display: block;
+  margin: 12px 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.template-picker select {
+  width: 100%;
+  margin-top: 6px;
+}
+.template-description {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.team-form {
+  grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr) !important;
+  align-items: end;
+  margin-top: 12px;
+}
+.team-form label {
+  min-width: 0;
+}
+.team-form select,
+.team-form input {
+  width: 100%;
+  max-width: 100%;
+}
+.team-form button {
+  min-height: 36px;
+}
+.team-form label span {
+  font-size: 11px;
+}
+.results-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+.results-heading h2 {
+  font-size: 19px;
+  margin: 5px 0;
+}
+.results-heading p {
+  color: var(--muted);
+  font-size: 12px;
+}
+.result-empty {
+  padding: 28px 16px;
+  text-align: center;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.result-empty .icon {
+  width: 36px;
+  height: 36px;
+  display: block;
+  margin: 0 auto 14px;
+  color: #ffa128;
+}
+.result-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+.result-card {
+  border: 1px solid #344d68;
+  border-radius: 9px;
+  padding: 15px;
+  background: #15283d;
+}
+.result-card strong {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.result-card p {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.result-card button {
+  font-size: 11px;
+}
+.result-card details {
+  font-size: 10px;
+  color: var(--muted);
+  margin: 10px 0;
+  overflow-wrap: anywhere;
+}
+body[data-workspace-view="team"] .composer textarea,
+body[data-workspace-view="results"] .composer textarea {
+  min-height: 52px;
+  height: 52px;
+}
+body[data-workspace-view="team"] .composer,
+body[data-workspace-view="results"] .composer {
+  padding: 10px 13px;
+}
+.task-team-settings {
+  flex: 0 1 auto;
+  max-height: 48%;
+  overflow: auto;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 11px 14px;
+  background: #112239;
+  font-size: 11px;
+}
+.task-team-settings > summary {
+  cursor: pointer;
+  color: var(--text);
+  line-height: 1.6;
+}
+.task-team-settings > summary > small {
+  display: block;
+  margin-left: 15px;
+  color: #ffc778;
+  font-size: 11px;
+}
+.task-team-settings .team-row {
+  display: grid;
+  gap: 7px;
+  margin-top: 12px;
+}
+.task-team-settings .team-row label {
+  font-size: 11px;
+  color: var(--text);
+  margin: 0;
+}
+.task-team-settings .team-row {
+  padding: 0;
+  align-items: start;
+}
+.task-team-settings > summary {
+  padding: 2px 0;
+}
+.task-team-settings .team-flags label {
+  margin: 0;
+}
+.task-team-quick {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10px;
+  padding: 7px 9px;
+  color: #ffd293;
+  border-color: #6d5735;
+  background: #2d291e;
+}
+.task-team-settings select {
+  width: 100%;
+  max-width: 100%;
+  font-size: 11px;
+}
+.task-team-settings .hint,
+.team-council-hint {
+  font-size: 10px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.task-team-settings .team-flags {
+  display: grid;
+  gap: 13px;
+  margin-top: 14px;
+}
+.task-team-settings .team-flags label {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  column-gap: 8px;
+  row-gap: 5px;
+  align-items: start;
+  font-size: 11px;
+  color: var(--text);
+}
+.task-team-settings .team-flags label input {
+  margin: 3px 0 0;
+}
+.task-team-settings .team-flags label small {
+  grid-column: 2;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.6;
+}
+.memory-source-status {
+  display: grid;
+  gap: 5px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.memory-source-status strong {
+  color: var(--text);
+  font-size: 11px;
+}
+.team-council-hint {
+  margin: 12px 0 0;
+}
+.agent-use {
+  color: #ffcf8b !important;
+  font-size: 10px !important;
+  padding: 5px 8px !important;
+}
+.workspace-tabbar button:focus-visible,
+.agent-actions button:focus-visible,
+.team-recruit summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+@media (max-width: 1100px) {
+  .agents-list {
+    grid-template-columns: 1fr;
+  }
+  .workspace-tab-note {
+    display: none;
+  }
+  .workspace-center-panel,
+  #agentsDialog[open] {
+    padding: 13px;
+  }
+  .workspace-tabbar button {
+    padding: 8px 11px;
+  }
+}
+@media (max-width: 800px) {
+  .workspace-tabbar {
+    margin-left: 12px;
+  }
+  .team-overview {
+    flex-wrap: wrap;
+  }
+  .results-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .team-form {
+    grid-template-columns: 1fr !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .agent-card {
+    transition: none;
+  }
+}
+
+/* U2 (UX spec 29 Oct 2026): "Sedang dikerjakan" cards. Tokens only; no fixed height, so long
+   text wraps instead of being cut; the "Otomatis" badge is dark text on the orange accent. */
+.sedang-dikerjakan {
+  display: grid;
+  gap: 12px;
+}
+.sedang-dikerjakan-title {
+  font-size: 16px;
+  line-height: 1.5;
+}
+.sedang-kartu {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: grid;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.sedang-kartu > * {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  margin: 0;
+}
+.sedang-kepala {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  padding-bottom: 12px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+}
+.sedang-judul {
+  font-size: 16px;
+  line-height: 1.5;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.sedang-lencana {
+  background: var(--accent);
+  color: #251600;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.sedang-rincian > summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: var(--accent);
+}
+.sedang-rincian > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.sedang-fakta {
+  color: var(--muted);
+}
+@media (max-width: 599px) {
+  .sedang-kartu {
+    padding: 12px;
+  }
+}
+
+/* NOTE: the rules below used to live at the end of galaxy.css, but that file has an unclosed block
+   (#projectError:empty, K06) that turns everything after it into dead nested rules. They live here,
+   in a balanced file, so they actually apply. */
+/* U1 (UX spec 29 Oct 2026): the "next model" chip is always visible. It wraps instead of being
+   hidden or cut with an ellipsis; below 900px it takes its own row under the title. */
+.header-actions .badge {
+  max-width: 320px;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  line-height: 1.5;
+}
+#modelSummary {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 899px) {
+  main > header {
+    height: auto;
+    min-height: 78px;
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+  .header-actions {
+    flex: 1 1 100%;
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+  .header-actions .badge {
+    flex: 1 1 100%;
+    max-width: 100%;
+    order: -1;
+  }
+}
+
+/* U5: one cost sentence, technical numbers behind a closed "Rincian". Text >= 14px, summary
+   target >= 44px tall, visible keyboard focus. Two lines are allowed; nothing scrolls sideways. */
+.usage-line {
+  font-size: 14px;
+  line-height: 1.5;
+  opacity: 1;
+  overflow-wrap: anywhere;
+}
+.usage-line .usage-sentence {
+  display: block;
+}
+.usage-detail > summary,
+.run-facts-details > summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: var(--accent);
+  font-size: 14px;
+}
+.usage-detail > summary:focus-visible,
+.run-facts-details > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.usage-detail > p {
+  margin: 0 0 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 599px) {
+  .usage-detail > summary {
+    width: 100%;
+  }
+}
+
+/* Mode hint (UX spec 29 Oct 2026, section 5): one readable line under the mode buttons. Below 900px
+   the mode group takes its own row; below 600px the buttons stack at full width. Targets >= 44px. */
+.mode-hint {
+  margin: 4px 0 6px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.mode-hint > span {
+  display: block;
+}
+.mode-hint-busy {
+  color: var(--accent);
+}
+.modes button {
+  min-height: 44px;
+}
+@media (max-width: 899px) {
+  .modes {
+    flex: 1 1 100%;
+  }
+}
+@media (max-width: 599px) {
+  .modes {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .modes button {
+    width: 100%;
+    font-size: 14px;
+  }
+}
+
+/* With a taller "Sedang dikerjakan" card (and the HOLD banner) the board used to shrink to nothing
+   and spill over the bottom note. The Beranda column now scrolls and the board keeps a usable height. */
+#chatWorkspace {
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+#chatWorkspace > .task-board,
+#chatWorkspace .task-board {
+  min-height: 320px;
+}
+.footnote {
+  font-size: 14px;
+  line-height: 1.5;
+}
+/* UX spec 29 Oct, section 7: below 900px the work area is one column (the open task panel joins
+   the page flow) and the composer actions wrap instead of cutting "Mulai" and the team chip. */
+@media (max-width: 899px) {
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: max-content;
+    overflow-y: auto;
+  }
+  .workspace > * {
+    min-height: max-content;
+  }
+  .composer-bottom {
+    flex-wrap: wrap;
+  }
+  .composer-bottom > span {
+    flex: 1 1 100%;
+    font-size: 14px;
+  }
+  .composer-bottom > button {
+    flex: 1 1 auto;
+    min-height: 44px;
+  }
+}

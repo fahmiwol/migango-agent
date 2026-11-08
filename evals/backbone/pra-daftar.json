@@ -1,0 +1,39 @@
+{
+  "v": 1,
+  "eksperimen": "backbone-v1: polos vs backbone miganGO pada model kecil lokal",
+  "dibuat": "2026-10-27",
+  "dokumen": "docs/01-riset/RISET-013-benchmark-polos-vs-backbone/README.md",
+  "setTugas": "evals/backbone/v1.json",
+  "statusData": "BELUM ADA DATA saat pra-daftar ini di-commit",
+  "lengan": {
+    "polos": "satu panggilan model, tanpa alat; prompt + isi berkas fixture disisipkan; keluaran = teks mentah",
+    "backbone": "router kategori -> alat; retrieval top-3 disisipkan; satu panggilan rencana (JSON langkah); loop alat deterministik maks 4 langkah; hasil alat dipotong 1200 karakter; pesan lama dipadatkan saat melewati anggaran; keluaran JSON {jawaban, sumber}; verifier format/batasan publik/sumber, ulang maks 2 kali"
+  },
+  "model": {
+    "kecil": "model Ollama lokal yang sudah terpasang; nama dan digest dicatat di laporan; tidak mengunduh model baru",
+    "plafon": "Anthropic Sonnet, lengan polos, hanya subsetPlafon, 1 ulangan, butuh --izinkan-plafon"
+  },
+  "subsetPlafon": [
+    "koding-nilai-fungsi", "koding-baris-bug",
+    "riset-cuti-kontrak", "riset-harga-berlaku",
+    "konten-judul-rapat", "konten-tabel-kalimat",
+    "operasi-hitung-error", "operasi-izin-perintah",
+    "data-pendapatan-jawa", "data-median"
+  ],
+  "ulangan": { "kecil": 3, "plafon": 1 },
+  "metrik": {
+    "utama": "skor = proporsi tugas lulus penilai deterministik, rata-rata per tugas atas ulangan; dilaporkan per kategori dan total",
+    "kenaikan": "skor backbone - skor polos (poin persen), berpasangan per tugas, CI 95% bootstrap per tugas (2000 sampel, seed 1)",
+    "sekunder": ["pass^3 per lengan", "rasio backbone-kecil / plafon pada subset", "panggilan model per tugas", "token masuk/keluar", "waktu dinding per tugas (median, total)", "biaya US$ (Ollama = 0; plafon = token x harga yang diisi pemilik)"]
+  },
+  "hipotesis": [
+    { "id": "H1", "isi": "Backbone menaikkan skor total model kecil", "ambang": "kenaikan total >= 15 poin dan batas bawah CI 95% > 0" },
+    { "id": "H2", "isi": "Kenaikan tidak terpusat di satu kategori", "ambang": "kenaikan >= 0 di minimal 4 dari 5 kategori" },
+    { "id": "H3", "isi": "Backbone mendekatkan model kecil ke plafon", "ambang": "skor backbone-kecil / skor plafon-polos pada subsetPlafon >= 0.8" },
+    { "id": "H4", "isi": "Biaya waktu backbone masih wajar", "ambang": "median waktu backbone per tugas <= 6x median polos" }
+  ],
+  "aturanBerhenti": "Model kecil: berhenti setelah 3 ulangan x 20 tugas x 2 lengan. Plafon: maks 10 tugas, 1 ulangan, pagu US$1; berhenti bila estimasi melewati pagu.",
+  "analisisTetap": "Tidak menambah, menghapus, atau mengubah tugas/penilai/ambang setelah melihat data. Perubahan apa pun = eksperimen baru (v2) dengan pra-daftar baru. Tugas yang galat runtime dihitung gagal, bukan dibuang.",
+  "batasKlaim": "20 tugas adalah pilot. Hasil berlaku untuk set ini dan model yang dicatat, bukan klaim umum 'model kecil setara model besar'.",
+  "vonis": null
+}

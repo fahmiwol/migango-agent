@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 370" width="720" height="370" role="img" aria-label="Blended cost per 1M tokens (input + output + cache)">
+
+<style>
+  .root { --surface:#fcfcfb; --t1:#0b0b0b; --t2:#52514e; --t3:#8a8984; --grid:#e6e5e0;
+          --cloud:#2a78d6; --local:#1baf7a; }
+  @media (prefers-color-scheme: dark) {
+    .root { --surface:#1a1a19; --t1:#f0efec; --t2:#c3c2b7; --t3:#8f8e86; --grid:#33332f;
+            --cloud:#3987e5; --local:#199e70; }
+  }
+  .bg { fill: var(--surface); }
+  .title { font: 600 15px system-ui, -apple-system, Segoe UI, sans-serif; fill: var(--t1); }
+  .sub { font: 400 11.5px system-ui, -apple-system, Segoe UI, sans-serif; fill: var(--t2); }
+  .lab { font: 500 12px system-ui, -apple-system, Segoe UI, sans-serif; fill: var(--t1); }
+  .val { font: 600 12px ui-monospace, SFMono-Regular, Consolas, monospace; fill: var(--t1); }
+  .note { font: 400 10.5px system-ui, -apple-system, Segoe UI, sans-serif; fill: var(--t3); }
+  .grid { stroke: var(--grid); stroke-width: 1; }
+  .cloud { fill: var(--cloud); }
+  .local { fill: var(--local); }
+  .key { font: 500 11px system-ui, -apple-system, Segoe UI, sans-serif; fill: var(--t2); }
+</style>
+
+<g class="root">
+<rect class="bg" x="0" y="0" width="720" height="370" rx="10"/>
+<text class="title" x="20" y="30">Blended cost per 1M tokens (input + output + cache)</text>
+<text class="sub" x="20" y="50">USD per 1M tokens actually billed, same log, 2026-10-26 to 2026-11-09 (6 logged days)</text>
+<rect class="cloud" x="510" y="22" width="10" height="10" rx="2"/>
+<text class="key" x="525" y="31">Cloud API</text>
+<rect class="local" x="595" y="22" width="10" height="10" rx="2"/>
+<text class="key" x="610" y="31">Local (Ollama)</text>
+<line class="grid" x1="190.0" y1="70" x2="190.0" y2="312"/>
+<line class="grid" x1="410.0" y1="70" x2="410.0" y2="312"/>
+<line class="grid" x1="630.0" y1="70" x2="630.0" y2="312"/>
+<text class="lab" x="178" y="93.4" text-anchor="end">Claude Opus 5.5</text>
+<path class="cloud" d="M190,78 H626.0 Q630.0,78 630.0,82 V96 Q630.0,100 626.0,100 H190 Z"/>
+<text class="val" x="638.0" y="93.4">$2.65</text>
+<text class="lab" x="178" y="127.4" text-anchor="end">Claude Sonnet 5.5</text>
+<path class="cloud" d="M190,112 H508.11320754716985 Q512.1132075471698,112 512.1132075471698,116 V130 Q512.1132075471698,134 508.11320754716985,134 H190 Z"/>
+<text class="val" x="520.1" y="127.4">$1.94</text>
+<text class="lab" x="178" y="161.4" text-anchor="end">Kimi K3.1 Pro</text>
+<path class="cloud" d="M190,146 H297.24528301886795 Q301.24528301886795,146 301.24528301886795,150 V164 Q301.24528301886795,168 297.24528301886795,168 H190 Z"/>
+<text class="val" x="309.2" y="161.4">$0.67</text>
+<text class="lab" x="178" y="195.4" text-anchor="end">Kimi K2.6</text>
+<path class="cloud" d="M190,180 H270.6792452830189 Q274.6792452830189,180 274.6792452830189,184 V198 Q274.6792452830189,202 270.6792452830189,202 H190 Z"/>
+<text class="val" x="282.7" y="195.4">$0.51</text>
+<text class="lab" x="178" y="229.4" text-anchor="end">Claude Haiku 5.5</text>
+<path class="cloud" d="M190,214 H265.6981132075472 Q269.6981132075472,214 269.6981132075472,218 V232 Q269.6981132075472,236 265.6981132075472,236 H190 Z"/>
+<text class="val" x="277.7" y="229.4">$0.48</text>
+<text class="lab" x="178" y="263.4" text-anchor="end">qwen3.5:4b (home CPU)</text>
+<rect class="local" x="190" y="248" width="3" height="22" rx="1.5"/>
+<text class="val" x="201.0" y="263.4">$0.00</text>
+<text class="lab" x="178" y="297.4" text-anchor="end">qwen3:4b (home CPU)</text>
+<rect class="local" x="190" y="282" width="3" height="22" rx="1.5"/>
+<text class="val" x="201.0" y="297.4">$0.00</text>
+<text class="note" x="20" y="352">Blended rate depends on cache hits; vendor list prices differ. Local = $0 marginal (electricity aside).</text>
+</g>
+</svg>

@@ -1,0 +1,16 @@
+{
+  "source": "migancore-logo.svg",
+  "sourceSha256": "fd263032cca7ec6aab0f58d4de6b82feb7975c0ecd5c18c18ed5898305f155fe",
+  "pngSha256": "f562ab5977c62040041d1760ae1a44c73aa67f4072ea1230cead2d3d6e087855",
+  "icoSha256": "31521216f3c0467a4559c046d7f6454efd68d660d6fa0a9eeca5922b01f208f7",
+  "sizes": [
+    16,
+    24,
+    32,
+    48,
+    64,
+    128,
+    256
+  ],
+  "method": "Pinned Electron SVG render; unchanged geometry and colors; transparent square canvas"
+}

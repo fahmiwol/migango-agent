@@ -1,0 +1,15 @@
+{
+  "default": "lokal",
+  "models": {
+    "lokal": {
+      "provider": "ollama",
+      "model": "isi-nama-model",
+      "url": "http://127.0.0.1:11434"
+    },
+    "cloud": {
+      "provider": "isi",
+      "model": "isi",
+      "key_env": "NAMA_ENV_KUNCI"
+    }
+  }
+}

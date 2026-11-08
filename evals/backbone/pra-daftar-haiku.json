@@ -1,0 +1,53 @@
+{
+  "v": 1,
+  "episode": "backbone-v1-haiku",
+  "judul": "Haiku 5.5 polos vs Haiku 5.5 dengan runtime miganGO, Sonnet 5.5 polos sebagai plafon",
+  "dibuat": "2026-10-27T05:43Z",
+  "asal": "Putusan markas 27 Okt: Ollama tidak terpasang di laptop pemilik, jadi lengan kecil memakai Haiku 5.5 lewat kunci Anthropic di aplikasi. Varian dari evals/backbone/pra-daftar.json (2bea421).",
+  "dikunciSebelum": "Belum ada satu pun run Haiku atau Sonnet untuk set ini. Kunci = commit git yang memuat berkas ini; driver menolak berjalan dari commit lain.",
+  "bukanKlaim": "Ini BELUM membuktikan klaim 'model kecil lokal bisa canggih dengan backbone'. Haiku 5.5 adalah model API, bukan model lokal. Lengan lokal: MENUNGGU OLLAMA TERPASANG (izin pemilik).",
+  "setTugas": "evals/backbone/v1.json (20 tugas, git blob 1358aedf), tidak diubah",
+  "penilai": "src/eval/backbone.mjs nilai() (git blob d9c10e71), tidak diubah; dipanggil dengan { final: jawaban akhir run, sumber: [] }, jadi path sumber harus tertulis di jawaban akhir",
+  "laporan": "src/eval/backbone.mjs laporan() dengan subsetPlafon dari pra-daftar.json",
+  "lengan": {
+    "polos": "haiku-55 lewat Local Bridge, mode ask (alat baca saja, tanpa berkas fixture di disk), satu run per tugas",
+    "backbone": "haiku-55 lewat Local Bridge, mode work: runtime miganGO penuh (loop alat, tulis berkas, shell daftar-izin, kebijakan, pemadatan). Persetujuan otomatis hanya untuk write_file/edit_file/shell yang ditandai approvable oleh bridge, sama dengan runner antrean",
+    "plafon": "sonnet-55 lewat Local Bridge, mode ask, hanya subsetPlafon (10 tugas)"
+  },
+  "prompt": "SAMA untuk semua lengan: t.prompt + '\\n\\nBerkas:\\n' + isi berkas (format jalankanPolos) + '\\n\\nJawab singkat dan tepat. Jawaban akhirmu dinilai otomatis apa adanya. Bila butuh berkas sementara, tulis hanya di tmp-migan/bench/.' Route bridge 'coding' untuk semua lengan.",
+  "ulangan": { "polos": 2, "backbone": 2, "plafon": 1 },
+  "alasanUlangan": "Pra-daftar asal 3 ulangan untuk Ollama (gratis). Di sini 2 ulangan karena pagu token harian; per-tugas skor jadi {0, 0,5, 1}.",
+  "urutan": "Semua run diacak sekali dengan benih 20261027 (lengan diselang-seling) supaya pergeseran waktu/API tidak berpihak.",
+  "batasRun": "Run yang belum selesai sesudah 300 detik dihentikan lewat bridge stop dan dihitung GAGAL. Galat penyedia/runtime dihitung GAGAL (analisisTetap asal). Galat infrastruktur (bridge mati, ERR_COST_CAP, app ditutup) BUKAN hasil: driver berhenti, run itu tidak dihitung, dan dicatat.",
+  "hipotesis": [
+    { "id": "H1", "bunyi": "Runtime miganGO menaikkan skor total Haiku", "ambang": "kenaikan total >= 15 poin dan batas bawah CI 95% bootstrap per tugas > 0 (laporan())", "kalauSalah": "kenaikan < 15 poin atau CI menyentuh 0", "kalauSalahDenganCaraLain": "backbone LEBIH RENDAH dari polos: jawaban akhir runtime bertele-tele atau melanggar format sehingga gagal penilai" },
+    { "id": "H2", "bunyi": "Kenaikan tidak terpusat di satu kategori", "ambang": "kenaikan >= 0 di minimal 4 dari 5 kategori" },
+    { "id": "H3", "bunyi": "Runtime mendekatkan Haiku ke Sonnet polos", "ambang": "skor backbone-Haiku / skor plafon pada subsetPlafon >= 0,8" },
+    { "id": "H4", "bunyi": "Biaya waktu backbone wajar", "ambang": "median waktu backbone per run <= 6x median polos" }
+  ],
+  "periksaC55": "H1 butuh selisih 3 tugas bersih dari 20. Bila skor polos >= 0,85, kenaikan 15 poin tidak bisa dimenangkan (langit-langit). Itu dilaporkan wajib, bukan alasan mengubah ambang. Granularitas: satu tugas = 5 poin; satu ulangan satu tugas = 2,5 poin.",
+  "laporanWajib": ["tabel per tugas per lengan: lulus/gagal tiap ulangan, giliran, token masuk/keluar, dolar menurut harga di meteran, detik", "jumlah run yang dihentikan karena 300 detik", "alat yang dipakai lengan backbone", "baris 'belum membuktikan model kecil lokal'"],
+  "aturanBerhenti": "Satu kali lari penuh 20x2x2 + 10x1 = 90 run. Vonis dihitung sekali sesudah semua run selesai. Bila lari terputus oleh galat infrastruktur, run yang tersisa dijalankan dalam lari lanjutan dengan urutan dan prompt yang sama; tidak ada run yang diulang karena hasilnya.",
+  "ujiAsap": "Satu tugas tiruan di luar set ('asap', tidak dihitung) dijalankan di tiap lengan sebelum lari penuh, untuk memeriksa rantai bridge -> model -> jawaban -> penilai dan mencatat panggilan terlama. Batas waktu penyedia: ask 2048 token -> 122 s, work 16000 token -> 540 s (1e0940f).",
+  "ramalan": { "pic": { "H1_menang": 0.2, "H1_tidak_menang": 0.65, "backbone_lebih_rendah": 0.25, "tidak_sah_instrumen": 0.15, "H3_menang": 0.55 } },
+  "yangTIDAKbolehDilakukan": ["mengubah tugas, penilai, prompt, atau ambang sesudah melihat hasil", "mengulang run karena hasilnya", "membaca kunci API"],
+  "keterbatasanYangDIAKUI": ["n = 20 tugas, pilot", "lengan polos bukan satu panggilan mentah: mode ask miganGO tetap memakai prompt sistem miganGO dan boleh memakai alat baca", "harga Haiku di meteran memakai tingkat >100k token, jadi dolar Haiku dilebih-lebihkan", "tanpa kritik silang model lain sebelum kunci (waktu dan pagu); dicatat sebagai kekurangan"],
+  "catatanPelaksanaan_27Okt": {
+    "ditulis": "2026-10-27T05:51Z, sesudah 90/90 run, sebelum vonis ditulis",
+    "driver": "C:/work/bench-haiku.mjs (di luar repo), set tugas dan penilai diimpor dari worktree beku di commit kunci eb19dd3",
+    "ujiAsap": "2 kali, tidak dihitung. Kali kedua menambah pencatatan run.profile: polos/backbone = claude-haiku-5-5, plafon = claude-sonnet-5-5. Penambahan itu hanya pencatatan, tidak mengubah prompt, penilai, atau urutan.",
+    "intipDini": "PIC menjalankan alat laporan pada 18/90 run sebelum alat itu menolak vonis dini; tabel H1-H4 sementara terlihat. Tidak ada tugas, prompt, penilai, ambang, atau urutan yang diubah sesudahnya. Alat laporan kini menolak sebelum 90 run.",
+    "galatHarness": "0 dari 90 (tidak ada galat penyedia/runtime, tidak ada run yang dihentikan 300 s, tidak ada galat infrastruktur)",
+    "panggilanTerlama": "60,5 s (batas penyedia ask 122 s, work 540 s; margin >= 2x)"
+  },
+  "vonis": {
+    "hasil": "TIDAK MENENTUKAN (langit-langit). Haiku polos lulus 40/40, Haiku backbone 40/40, kenaikan 0 [CI 0, 0]. H1 TIDAK MENANG, seperti periksaC55. H2 dan H3 tercetak MENANG oleh laporan(), tetapi VAKUM: H2 lolos karena kenaikan 0 >= 0 di semua kategori; H3 rasio 1,25 karena Sonnet gagal 2/10 pada FORMAT (jawaban benar tetapi bertele-tele: '**3** ...' dan menyebut harga lama 99.000 sebagai pembanding), bukan karena backbone. H4 MENANG (median 3,0 s vs 3,0 s).",
+    "temuanUtama": "Runtime miganGO tidak dipakai sama sekali: 40/40 run backbone selesai dalam 1 giliran, 0 alat yang perlu persetujuan. Set RISET-013 v1 terlalu mudah untuk Haiku 5.5, jadi instrumen ini tidak bisa mengukur efek backbone pada model ini. Ini bukan bukti bahwa backbone tidak berguna, dan bukan bukti bahwa ia berguna.",
+    "biaya": "US$0,20 menurut meteran (Haiku dihitung di tingkat >100k); sekitar US$0,08 di tingkat harga sebenarnya. Token: polos 85k masuk/9k keluar, backbone 85k/8k, plafon 21k/0,7k, ditambah cache.",
+    "skorBrier": "Ramalan PIC H1_menang 0,2 -> hasil tidak menang: (0,2 - 0)^2 = 0,04. Ramalan kategori lain tidak membentuk distribusi koheren (jumlahnya > 1); dicatat sebagai cacat ramalan.",
+    "langkahBerikut": "v2 butuh pra-daftar baru dengan tugas yang memang gagal di Haiku polos (multi-langkah, hitungan panjang, berkas besar yang harus dicari), dibuktikan lewat uji pilot di set pengembangan TERPISAH sebelum dikunci. Lengan lokal tetap menunggu Ollama.",
+    "bukti": "evals/backbone/hasil-haiku-eb19dd3.jsonl (90 baris mentah), docs/01-riset/RISET-013-benchmark-polos-vs-backbone/hasil-haiku-eb19dd3.md (tabel per tugas)",
+    "keadaan": "netral",
+    "tanggal": "2026-10-27T05:51Z"
+  }
+}

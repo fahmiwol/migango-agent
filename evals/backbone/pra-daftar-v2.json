@@ -1,0 +1,156 @@
+{
+  "v": 1,
+  "episode": "backbone-v2-haiku",
+  "judul": "Haiku 5.5 polos vs Haiku 5.5 dengan runtime miganGO pada tugas berkas besar, Sonnet 5.5 polos sebagai rujukan",
+  "dibuat": "2026-10-27T09:56Z",
+  "asal": "Putusan markas 27 Okt ('ya v2' + dua tambahan). Pilot 1 (benih 1) dan pilot 2 (benih 2) adalah set PENGEMBANGAN dan sudah dilihat; v2 memakai benih BARU 3 yang belum pernah dijalankan.",
+  "dikunciSebelum": "Belum ada satu pun run untuk benih 3. Kunci = commit git yang memuat berkas ini; driver menolak berjalan dari commit lain.",
+  "bukanKlaim": "Bukan klaim 'model kecil lokal'. Haiku 5.5 adalah model API. Lengan lokal menunggu Ollama (izin pemilik).",
+  "setTugas": "evals/backbone/v2/generator2.mjs buatSet2(3, 4) tanpa generator 'hari-kerja' (pilot 2: polos 3/3, tidak lolos syarat <= 50%) = 28 tugas, 7 generator x 4. Data sebagai BERKAS di tmp-migan/bench2/<id>/ (<= 20 KB per berkas); prompt tidak memuat isi data.",
+  "kebenaranDasar": "Jawaban dihitung oleh kode generator (bukan model). Contoh: keluaran jejak-program dibandingkan dengan menjalankan hitung.js.",
+  "penilai": "evals/backbone/v2/generator.mjs nilaiV2(): sama untuk semua lengan; baris terakhir jawaban dinormalisasi (markdown dibuang), angka terakhir atau nama kandidat tunggal dibandingkan dengan kunci.",
+  "lengan": {
+    "polos": "haiku-55, mode ask (alat baca saja), lewat Local Bridge",
+    "backbone": "haiku-55, mode work (runtime miganGO: alat, tulis berkas, node lewat daftar-izin, verifier)",
+    "rujukan": "sonnet-55, mode ask, 1 ulangan pada ke-28 tugas; HANYA pembanding, tanpa hipotesis"
+  },
+  "ulangan": {
+    "polos": 2,
+    "backbone": 2,
+    "rujukan": 1
+  },
+  "totalRun": 140,
+  "prompt": "SAMA untuk semua lengan: t.prompt + '\\n\\nJawab singkat dan tepat; baris terakhir jawabanmu dinilai otomatis. Bila butuh berkas sementara, tulis hanya di tmp-migan/bench/.' Route 'coding', maxTurns 25 per run.",
+  "anggaranSama": "Selama lari, kit --ask-setara menyamakan anggaran ask dengan work (masukan per permintaan 200 KB, kumulatif 8 MB, keluaran 16000). Dicatat di catatan pelaksanaan dan dipulihkan sesudahnya (pulihkan).",
+  "persetujuan": "Lengan backbone: write_file/edit_file/shell disetujui otomatis hanya bila bridge menandainya approvable di workspace yang sama; selain itu ditolak sebagai kebijakan.",
+  "urutan": "Semua 140 run diacak sekali dengan benih 20261028.",
+  "galatHarness": "Run dihitung HARNESS bila run.error memuat salah satu: 'Batas masukan', 'Jawaban terpotong', 'Maximum model turns', 'timed out', 'stream', 'HTTP', atau run dihentikan karena 300 s. Galat infrastruktur (bridge mati, ERR_COST_CAP, app ditutup) BUKAN hasil: driver berhenti dan lari dilanjutkan dengan urutan yang sama.",
+  "hipotesis": [
+    {
+      "id": "H1",
+      "bunyi": "Runtime miganGO menaikkan skor Haiku pada tugas berkas besar",
+      "ambang": "skor backbone - skor polos >= 0,25 (skor per tugas = rata-rata atas ulangan, lalu rata-rata atas 28 tugas) DAN batas bawah CI 95% bootstrap berpasangan per tugas > 0 (bootstrapCI dari src/eval/backbone.mjs, 2000 sampel, benih 1)",
+      "kalauSalah": "kenaikan < 0,25 atau CI menyentuh 0",
+      "kalauSalahDenganCaraLain": "kenaikan datang dari polos yang gagal karena harness, bukan dari kemampuan alat: dicegah oleh anggaranSama dan H3"
+    },
+    {
+      "id": "H2",
+      "bunyi": "Kenaikan tidak terpusat di satu jenis tugas",
+      "ambang": "kenaikan > 0 (KETAT, bukan >= 0) di minimal 5 dari 7 generator"
+    },
+    {
+      "id": "H3",
+      "bunyi": "Syarat keabsahan, bukan klaim",
+      "ambang": "galat harness <= 10% di masing-masing lengan Haiku (<= 5 dari 56 run). Bila tidak terpenuhi: vonis TIDAK SAH, H1/H2 tidak dibaca."
+    }
+  ],
+  "periksaNolEfek": "Pada data nol-efek (backbone = polos) H1 kalah (selisih 0 < 0,25) dan H2 kalah (0 generator dengan kenaikan > 0). Ambang ini bisa kalah.",
+  "periksaC55": "Pilot 2: polos 17%, backbone 75% (selisih 58 poin, tetapi 10 kegagalan polos karena anggaran ask). Dengan anggaran disamakan, selisih yang realistis lebih kecil; 25 poin = 7 tugas bersih dari 28. Granularitas: satu tugas = 3,6 poin.",
+  "laporanWajib": [
+    "tabel per tugas per lengan: lulus/gagal tiap ulangan, jenis (model/harness), giliran, token masukan/cache-read/cache-write/keluaran, US$ meteran, detik",
+    "US$ per jawaban benar per lengan (harga meteran; Haiku tingkat >100k) dan median giliran per lengan (tambahan markas)",
+    "skor rujukan Sonnet polos dan rasio backbone-Haiku / Sonnet (tambahan markas; pembanding, bukan hipotesis)",
+    "gagal-format dipisah dari gagal-isi (alasan penilai 'tanpa angka' / 'disebut -' = format)",
+    "jumlah persetujuan alat di lengan backbone"
+  ],
+  "aturanBerhenti": "Satu kali lari 140 run. Vonis dihitung sekali sesudah 140 run lengkap; alat laporan menolak menghitung sebelum lengkap.",
+  "ramalan": {
+    "pic": {
+      "H1_menang": 0.65,
+      "H2_menang": 0.6,
+      "H3_sah": 0.8,
+      "tidak_sah_instrumen": 0.2
+    }
+  },
+  "yangTIDAKbolehDilakukan": [
+    "mengubah generator, benih, prompt, penilai, ambang, atau urutan sesudah data",
+    "mengulang run karena hasilnya",
+    "membaca kunci API"
+  ],
+  "keterbatasanYangDIAKUI": [
+    "28 tugas dari 7 generator buatan PIC, semuanya aritmetika/pencarian deterministik pada berkas; bukan tugas kerja nyata",
+    "lengan polos tetap memakai prompt sistem miganGO dan alat baca",
+    "harga Haiku di meteran memakai tingkat >100k token",
+    "tanpa kritik silang model lain sebelum kunci"
+  ],
+  "sidik": {
+    "generator.mjs": "42c5972f8e0dda7228224810b2ce0132c04249c9",
+    "generator2.mjs": "d6df9bbffb85cc4b056d5811c5b816f953026657",
+    "src/eval/backbone.mjs": "d9c10e716a5d027ab15ea94566dcd0dab9e3b4fd"
+  },
+  "vonis": {
+    "keadaan": "selesai",
+    "tanggal": "2026-10-28",
+    "kunci": "e482c16f402e914a4dcc4ce5a7efa7abb280c75b",
+    "hasil": "H3 SAH; H1 TIDAK TERPENUHI; H2 TERPENUHI",
+    "H3": {
+      "sah": true,
+      "galatHarness": {
+        "polos": 0,
+        "backbone": 0,
+        "rujukan": 0
+      }
+    },
+    "H1": {
+      "terpenuhi": false,
+      "kenaikan": 0.107,
+      "ambang": 0.25,
+      "ci95": [
+        0.018,
+        0.196
+      ],
+      "catatan": "CI di atas nol, tetapi kenaikan 0,107 di bawah ambang 0,25 yang dikunci sebelum lari"
+    },
+    "H2": {
+      "terpenuhi": true,
+      "generatorNaik": 5,
+      "dari": 7,
+      "perGenerator": {
+        "jumlah-bersyarat": 0.125,
+        "jumlah-durasi": 0.125,
+        "median-ganjil": 0.125,
+        "gabung-tabel": 0.125,
+        "jejak-program": 0.25,
+        "peringkat-ke-k": 0,
+        "hitung-pasangan": 0
+      }
+    },
+    "skor": {
+      "polos": 0.339,
+      "backbone": 0.446,
+      "rujukanSonnet": 0.464,
+      "rasioBackboneRujukan": 0.961
+    },
+    "usdPerBenar": {
+      "polos": 0.072,
+      "backbone": 0.075,
+      "rujukanSonnet": 0.276
+    },
+    "medianGiliran": {
+      "polos": 2,
+      "backbone": 4,
+      "rujukan": 2
+    },
+    "gagalFormat": {
+      "polos": 27,
+      "backbone": 24,
+      "rujukan": 4
+    },
+    "runDenganAlat": {
+      "backbone": 19
+    },
+    "ramalanPIC": {
+      "H1": "0,65 menang -> salah",
+      "H2": "0,6 menang -> benar",
+      "H3": "0,8 sah -> benar"
+    },
+    "penyimpangan": "Run 135-140 dibatalkan sebagai galat infrastruktur (recovery HOLD aplikasi; driver salah mencatatnya sebagai jenis model) dan diulang dengan urutan sama di worktree bangun3 (commit 30601e0 yang sama). Baris asli disimpan di v2/dibatalkan-infra-hold-135-140.jsonl; catatan di v2/catatan-pelaksanaan-v2.jsonl. Jeda di 60/140 dan 120/140 tidak mengubah urutan atau penilai.",
+    "bacaan": "Backbone menaikkan skor Haiku secara nyata tetapi kecil (+0,107, CI 0,018..0,196), di 5 dari 7 generator. Backbone-Haiku mencapai 96% skor Sonnet polos dengan biaya per jawaban benar 27% dari Sonnet. Hampir separuh kegagalan adalah format jawaban, bukan isi: kandidat perbaikan berikutnya, diuji sebagai pra-daftar baru (v3), bukan dibaca ulang dari data ini.",
+    "bukti": [
+      "v2/laporan-v2.json",
+      "v2/hasil-v2.jsonl",
+      "v2/catatan-pelaksanaan-v2.jsonl",
+      "v2/dibatalkan-infra-hold-135-140.jsonl"
+    ]
+  }
+}

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 300" width="960" height="300" role="img" aria-label="miganGO: a task flows to a local model on your own hardware, passes an owner approval gate and a cost cap, and only reaches a cloud model when you press the button.">
+<style>
+  .root { --bg:#fcfcfb; --t1:#0b0b0b; --t2:#52514e; --line:#c9c8c2; --local:#1baf7a; --cloud:#2a78d6; --gate:#eda100; --card:#ffffff; }
+  @media (prefers-color-scheme: dark) {
+    .root { --bg:#141413; --t1:#f0efec; --t2:#c3c2b7; --line:#45443f; --local:#199e70; --cloud:#3987e5; --gate:#c98500; --card:#1f1f1d; }
+  }
+  .bg { fill: var(--bg); }
+  .brand { font: 800 34px system-ui, -apple-system, Segoe UI, sans-serif; fill: var(--t1); letter-spacing: -0.5px; }
+  .tag { font: 500 14px system-ui, -apple-system, Segoe UI, sans-serif; fill: var(--t2); }
+  .node { fill: var(--card); stroke: var(--line); stroke-width: 1.5; }
+  .nlab { font: 600 13px system-ui, -apple-system, Segoe UI, sans-serif; fill: var(--t1); }
+  .nsub { font: 400 11px system-ui, -apple-system, Segoe UI, sans-serif; fill: var(--t2); }
+  .wire { fill: none; stroke: var(--line); stroke-width: 2; }
+  .dash { fill: none; stroke: var(--cloud); stroke-width: 2; stroke-dasharray: 6 6; }
+  .dot-l { fill: var(--local); }
+  .dot-c { fill: var(--cloud); }
+  .ring-l { fill: none; stroke: var(--local); stroke-width: 2; }
+  .ring-g { fill: none; stroke: var(--gate); stroke-width: 2; }
+  .ring-c { fill: none; stroke: var(--cloud); stroke-width: 2; }
+  .pill { fill: none; stroke: var(--line); stroke-width: 1; }
+  .ptxt { font: 600 11px ui-monospace, SFMono-Regular, Consolas, monospace; fill: var(--t2); }
+  @media (prefers-reduced-motion: reduce) { .anim { display: none; } }
+</style>
+<g class="root">
+  <rect class="bg" width="960" height="300" rx="14"/>
+  <text class="brand" x="36" y="58">miganGO</text>
+  <text class="tag" x="36" y="84">The desktop agent that runs on the computer you already own, and asks before it spends.</text>
+
+  <!-- wires -->
+  <path id="w1" class="wire" d="M150 190 H290"/>
+  <path id="w2" class="wire" d="M430 190 H560"/>
+  <path id="w3" class="wire" d="M700 190 H820"/>
+  <path id="wc" class="dash" d="M630 160 V128 H760 V160"/>
+
+  <!-- nodes -->
+  <rect class="node" x="36" y="160" width="114" height="60" rx="10"/>
+  <text class="nlab" x="93" y="187" text-anchor="middle">Your task</text>
+  <text class="nsub" x="93" y="205" text-anchor="middle">desktop cockpit</text>
+
+  <rect class="node" x="290" y="160" width="140" height="60" rx="10"/>
+  <circle class="ring-l" cx="308" cy="190" r="6"/>
+  <text class="nlab" x="368" y="187" text-anchor="middle">Local model</text>
+  <text class="nsub" x="368" y="205" text-anchor="middle">Ollama on a home CPU</text>
+
+  <rect class="node" x="560" y="160" width="140" height="60" rx="10"/>
+  <circle class="ring-g" cx="578" cy="190" r="6"/>
+  <text class="nlab" x="638" y="187" text-anchor="middle">Owner gate</text>
+  <text class="nsub" x="638" y="205" text-anchor="middle">approve · cost cap</text>
+
+  <rect class="node" x="820" y="160" width="104" height="60" rx="10"/>
+  <text class="nlab" x="872" y="187" text-anchor="middle">Result</text>
+  <text class="nsub" x="872" y="205" text-anchor="middle">verified edits</text>
+
+  <rect class="node" x="700" y="104" width="120" height="44" rx="10" style="stroke:var(--cloud)"/>
+  <text class="nsub" x="760" y="122" text-anchor="middle" style="fill:var(--t1);font-weight:600">Cloud model</text>
+  <text class="nsub" x="760" y="138" text-anchor="middle">only when you click</text>
+
+  <!-- moving dots -->
+  <g class="anim">
+    <circle class="dot-l" r="6">
+      <animateMotion dur="4s" repeatCount="indefinite" path="M150 190 H290 M430 190 H560 M700 190 H820" keyPoints="0;1" keyTimes="0;1" calcMode="linear"/>
+    </circle>
+    <circle class="dot-c" r="5" opacity="0">
+      <animateMotion begin="2s" dur="4s" repeatCount="indefinite" path="M630 160 V128 H760 V160"/>
+      <animate attributeName="opacity" begin="2s" dur="4s" repeatCount="indefinite" values="0;0;0.9;0.9;0" keyTimes="0;0.4;0.5;0.9;1"/>
+    </circle>
+    <circle class="ring-g" cx="578" cy="190" r="6">
+      <animate attributeName="r" values="6;11;6" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- pills -->
+  <g transform="translate(36,252)">
+    <rect class="pill" x="0" y="0" width="112" height="26" rx="13"/><text class="ptxt" x="56" y="17" text-anchor="middle">local-first</text>
+    <rect class="pill" x="122" y="0" width="128" height="26" rx="13"/><text class="ptxt" x="186" y="17" text-anchor="middle">approval-gated</text>
+    <rect class="pill" x="260" y="0" width="112" height="26" rx="13"/><text class="ptxt" x="316" y="17" text-anchor="middle">cost-capped</text>
+    <rect class="pill" x="382" y="0" width="150" height="26" rx="13"/><text class="ptxt" x="457" y="17" text-anchor="middle">crash-safe journal</text>
+    <rect class="pill" x="542" y="0" width="98" height="26" rx="13"/><text class="ptxt" x="591" y="17" text-anchor="middle">BYOK</text>
+    <rect class="pill" x="650" y="0" width="128" height="26" rx="13"/><text class="ptxt" x="714" y="17" text-anchor="middle">Bahasa-first UX</text>
+    <rect class="pill" x="788" y="0" width="98" height="26" rx="13"/><text class="ptxt" x="837" y="17" text-anchor="middle">MIT</text>
+  </g>
+</g>
+</svg>

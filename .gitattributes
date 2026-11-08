@@ -1,0 +1,5 @@
+# Normalize text to LF in every checkout. native-artifact.mjs hashes native-entry.cs
+# as raw bytes; a CRLF checkout (core.autocrlf=true) breaks every native helper.
+* text=auto eol=lf
+# Git hooks run under bash; CRLF breaks them on Windows checkouts.
+.githooks/** text eol=lf

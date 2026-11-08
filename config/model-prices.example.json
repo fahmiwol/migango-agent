@@ -1,0 +1,21 @@
+{
+  "catatan": "Tabel harga PRD-019 (CLAUDE, 26 Okt 2026). Disahkan markas 26 Okt 2026 (ledger MiganExp 1148). Angka ini sama dengan harga bawaan aplikasi (BUILTIN_PRICES di src/core/cost-meter.mjs); harga yang diisi pemilik di Pengaturan › Harga model menimpanya. USD per 1 juta token, belum termasuk pajak. Model berbayar yang tidak ada di bawaan maupun di tabel pemilik tetap ditolak (ERR_COST_PRICE).",
+  "modelPrices": {
+    "anthropic/claude-opus-5-5": { "input": 4, "output": 20, "cached": 0.2, "cacheCreated": 5 },
+    "kimi/kimi-k2.6": { "input": 0.95, "output": 4, "cached": 0.16 }
+  },
+  "sumber": {
+    "anthropic/claude-opus-5-5": {
+      "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "diakses": "2026-10-26",
+      "baris": "Claude Opus 5.5: input $4, 5m cache writes $5, 1h cache writes $8, cache hits $0.20, output $20 per MTok",
+      "catatan": "cacheCreated memakai harga tulis 5 menit karena adaptor anthropic mengirim cache_control ephemeral tanpa ttl (bawaan 5 menit)."
+    },
+    "kimi/kimi-k2.6": {
+      "url": "https://platform.kimi.ai/docs/pricing/chat",
+      "diakses": "2026-10-26",
+      "baris": "kimi-k2.6: input $0.95, output $4.00, cached input $0.16 per MTok",
+      "catatan": "Tabel di halaman ini dirender di sisi klien; dibaca lewat browser. Halaman tidak mencantumkan harga tulis cache untuk seri K2, jadi cacheCreated mengikuti harga input. Seri K2 tidak tersedia untuk pengguna baru mulai 31 Okt 2026 dan dipensiunkan akhir Des 2026."
+    }
+  }
+}

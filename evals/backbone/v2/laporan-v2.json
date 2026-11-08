@@ -1,0 +1,59 @@
+{
+  "kunci": "e482c16f402e914a4dcc4ce5a7efa7abb280c75b",
+  "per": {
+    "polos": {
+      "run": 56,
+      "lulus": 19,
+      "skor": 0.339,
+      "harness": 0,
+      "format": 27,
+      "usd": 1.366,
+      "usdPerBenar": 0.072,
+      "medianGiliran": 2,
+      "alat": 0
+    },
+    "backbone": {
+      "run": 56,
+      "lulus": 25,
+      "skor": 0.446,
+      "harness": 0,
+      "format": 24,
+      "usd": 1.874,
+      "usdPerBenar": 0.075,
+      "medianGiliran": 4,
+      "alat": 19
+    },
+    "rujukan": {
+      "run": 28,
+      "lulus": 13,
+      "skor": 0.464,
+      "harness": 0,
+      "format": 4,
+      "usd": 3.585,
+      "usdPerBenar": 0.276,
+      "medianGiliran": 2,
+      "alat": 0
+    }
+  },
+  "kenaikan": 0.107,
+  "ci": [
+    0.018,
+    0.196
+  ],
+  "genNaik": {
+    "jumlah-bersyarat": 0.125,
+    "jumlah-durasi": 0.125,
+    "median-ganjil": 0.125,
+    "gabung-tabel": 0.125,
+    "jejak-program": 0.25,
+    "peringkat-ke-k": 0,
+    "hitung-pasangan": 0
+  },
+  "naikPositif": 5,
+  "rasioBackboneRujukan": 0.961,
+  "vonis": {
+    "H3_sah": true,
+    "H1": false,
+    "H2": true
+  }
+}

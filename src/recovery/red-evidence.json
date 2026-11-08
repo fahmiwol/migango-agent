@@ -1,0 +1,21 @@
+{
+  "phase": "RED",
+  "command": "node --test tests/unit/recovery.test.mjs",
+  "exitCode": 1,
+  "initialFailure": "ERR_MODULE_NOT_FOUND src/recovery/journal.mjs",
+  "behaviorFailure": {
+    "test": "job custody preserves quoted Windows arguments and UTF-8 response",
+    "expected": "Indonesia café 世界",
+    "actual": "Indonesia caf├⌐ Σ╕ûτòî",
+    "assertion": "deepStrictEqual",
+    "fix": "explicit UTF-8 subprocess output decoding; assertion unchanged"
+  },
+  "testsWrittenBeforeImplementation": [
+    "durable intent and restart HOLD without replay",
+    "PID reuse cannot terminate unrelated process",
+    "raw command/output excluded and duplicate ID rejected",
+    "real Windows Job Object custody",
+    "forced host crash kills child and grandchild then HOLD",
+    "live custody cannot resolve before verified termination"
+  ]
+}
