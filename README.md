@@ -145,6 +145,8 @@ T_{\text{effective}} \;=\; T_{\text{owner}} \,\cap\, T_{\text{built-in}} \,\cap\
 \qquad T_{\text{ask}} = \{\texttt{list\_files},\ \texttt{read\_file},\ \texttt{search\_files}\}
 $$
 
+In **Ask** mode the mode set is read-only: `list_files`, `read_file`, `search_files`.
+
 **Spend gate** — before every call a reservation $r$ is taken under a file lock
 (`src/core/cost-meter.mjs`); the call proceeds only if
 
